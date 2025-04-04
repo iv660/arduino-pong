@@ -9,6 +9,7 @@ class Entity {};
 class PositionComponent {};
 class VelocityComponent {};
 class MovementSystem {};
+class RenderSystem {};
 
 ApplianceFactory applianceFactory;
 Appliance appliance;
