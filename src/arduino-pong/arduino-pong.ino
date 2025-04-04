@@ -10,6 +10,7 @@ class PositionComponent {};
 class VelocityComponent {};
 class MovementSystem {};
 class RenderSystem {};
+class CollisionSystem {};
 
 ApplianceFactory applianceFactory;
 Appliance appliance;
