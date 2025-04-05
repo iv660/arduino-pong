@@ -14,5 +14,5 @@ class RenderSystem
         RenderSystem(Appliance* appliance) : appliance(appliance) {};
 
         void begin();
-        void update(RenderComponent renderComponent);
+        void update(RenderComponent* renderComponent);
 };

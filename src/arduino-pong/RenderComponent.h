@@ -4,5 +4,5 @@
 
 struct RenderComponent
 {
-     SpriteInterface* sprite;   
+     SpriteInterface* sprite;
 };
