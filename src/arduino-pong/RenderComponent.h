@@ -4,5 +4,6 @@
 
 struct RenderComponent
 {
-     SpriteInterface* sprite;
+    SpriteInterface* sprite;
+    Position previousPosition;
 };

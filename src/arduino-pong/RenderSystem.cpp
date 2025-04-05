@@ -1,5 +1,12 @@
 #include "RenderSystem.h"
 
+#include <Arduino.h>
+
+bool RenderSystem::hasMoved(Entity *entity)
+{
+    return entity->positionComponent.position != entity->renderComponent.previousPosition;
+}
+
 void RenderSystem::begin()
 {
     appliance->screen->begin();
@@ -8,6 +15,14 @@ void RenderSystem::begin()
 
 void RenderSystem::redraw(Entity* entity)
 {
+    if (!hasMoved(entity)) {
+        return;
+    }
+
+    entity->renderComponent.sprite
+        ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
     entity->renderComponent.sprite
         ->drawOn(appliance->screen, entity->positionComponent.position);
+    entity->renderComponent.previousPosition = 
+        entity->positionComponent.position;
 }

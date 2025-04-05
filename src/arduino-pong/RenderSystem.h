@@ -11,6 +11,7 @@ class RenderSystem
 {
     private:
         Appliance* appliance;
+        inline bool hasMoved(Entity* entity);
     public:
         RenderSystem(Appliance* appliance) : appliance(appliance) {};
 

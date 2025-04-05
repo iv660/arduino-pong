@@ -13,4 +13,5 @@ class BallSprite: public SpriteInterface
         int const size = 8;
     public:
         void drawOn(ScreenInterface* screen, Position position);
+        void eraseFrom(ScreenInterface* screen, Position position);
 };
