@@ -7,11 +7,11 @@
 #include "RenderComponent.h"
 #include "RenderSystem.h"
 #include "MovementSystem.h"
+#include "MovementComponent.h"
+#include "Entity.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
-
-class MovementComponent {};
 
 class CollisionSystem {};
 
@@ -21,6 +21,7 @@ Appliance appliance;
 Vector<Entity> entities;
 
 RenderSystem renderSystem(&appliance);
+MovementSystem movementSystem;
 
 Entity leftPaddle;
 Entity rightPaddle;
@@ -41,8 +42,11 @@ void setup() {
     renderSystem.begin();
 
     ball.renderComponent.sprite = &ballSprite;
+    ball.positionComponent.position = {45, 60};
+    ball.movementComponent.velocity = {3, -1};
 }
 
 void loop() {
-    renderSystem.update(&ball.renderComponent);
+    movementSystem.update(&ball);
+    renderSystem.redraw(&ball);
 }

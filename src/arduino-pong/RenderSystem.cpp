@@ -6,7 +6,8 @@ void RenderSystem::begin()
     appliance->screen->background(0, 0, 0);
 }
 
-void RenderSystem::update(RenderComponent* renderComponent)
+void RenderSystem::redraw(Entity* entity)
 {
-    renderComponent->sprite->drawOn(appliance->screen, {45, 60});
+    entity->renderComponent.sprite
+        ->drawOn(appliance->screen, entity->positionComponent.position);
 }

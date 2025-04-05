@@ -3,6 +3,7 @@
 #include <Appliance.h>
 
 #include "RenderComponent.h"
+#include "Entity.h"
 
 using XC::Hardware::Appliance;
 
@@ -14,5 +15,5 @@ class RenderSystem
         RenderSystem(Appliance* appliance) : appliance(appliance) {};
 
         void begin();
-        void update(RenderComponent* renderComponent);
+        void redraw(Entity* entity);
 };
