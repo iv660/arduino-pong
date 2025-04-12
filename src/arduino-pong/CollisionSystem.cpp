@@ -2,7 +2,7 @@
 
 bool CollisionSystem::movesLeft(Entity * entity)
 {
-    return false;
+    return entity->movementComponent.xMovement.velocity < 0;
 }
 
 bool CollisionSystem::movesRight(Entity * entity)
@@ -12,32 +12,31 @@ bool CollisionSystem::movesRight(Entity * entity)
 
 bool CollisionSystem::movesUp(Entity * entity)
 {
-    return false;
+    return entity->movementComponent.yMovement.velocity < 0;
 }
 
 bool CollisionSystem::movesDown(Entity * entity)
 {
-    return false;
+    return entity->movementComponent.yMovement.velocity > 0;
 }
 
 bool CollisionSystem::hitsFromLeft(Entity * entity1, Entity * entity2)
 {
     return entity1->positionComponent.position.x + entity1->bouncingBoxComponent.width >= entity2->positionComponent.position.x - 1;
 }
-
 bool CollisionSystem::hitsFromRight(Entity * entity1, Entity * entity2)
 {
-    return false;
+    return entity1->positionComponent.position.x <= entity2->positionComponent.position.x + entity2->bouncingBoxComponent.width + 1;
 }
 
 bool CollisionSystem::hitsFromTop(Entity * entity1, Entity * entity2)
 {
-    return false;
+    return entity1->positionComponent.position.y + entity1->bouncingBoxComponent.height >= entity2->positionComponent.position.y - 1;
 }
 
 bool CollisionSystem::hitsFromBottom(Entity * entity1, Entity * entity2)
 {
-    return false;
+    return entity1->positionComponent.position.y <= entity2->positionComponent.position.y + entity2->bouncingBoxComponent.height + 1;
 }
 
 void CollisionSystem::bounceVertically(Entity *entity)
@@ -60,6 +59,21 @@ void CollisionSystem::update(Vector<BouncingBoxComponent> bouncingBoxComponents)
             if (movesRight(bouncable1) && hitsFromLeft(bouncable1, bouncable2)) {
                 bounceHorizontally(bouncable1);
                 bounceHorizontally(bouncable2);
+            }
+
+            if (movesLeft(bouncable1) && hitsFromRight(bouncable1, bouncable2)) {
+                bounceHorizontally(bouncable1);
+                bounceHorizontally(bouncable2);
+            }
+
+            if (movesDown(bouncable1) && hitsFromTop(bouncable1, bouncable2)) {
+                bounceVertically(bouncable1);
+                bounceVertically(bouncable2);
+            }
+
+            if (movesUp(bouncable1) && hitsFromBottom(bouncable1, bouncable2)) {
+                bounceVertically(bouncable1);
+                bounceVertically(bouncable2);
             }
         }
     }
