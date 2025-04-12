@@ -2,10 +2,10 @@
 
 #include <Vector.h>
 #include "BouncingBoxComponent.h"
+#include "Entity.h"
 
 class CollisionSystem
 {
-    private:
     public:
-        void update(Vector<BouncingBoxComponent*> bouncingBoxComponents);
+        void update(Vector<BouncingBoxComponent> bouncingBoxComponents);
 };

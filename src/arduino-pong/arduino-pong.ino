@@ -1,6 +1,7 @@
 #include <Vector.h>
 #include <ApplianceFactory.h>
 #include <Appliance.h>
+#include <Arduino.h>
 
 #include "BallSprite.h"
 #include "Position.h"
@@ -19,7 +20,8 @@ using XC::SlimPad::ApplianceFactory;
 ApplianceFactory applianceFactory;
 Appliance appliance;
 
-Vector<Entity> entities;
+Entity entitiesStorage[3];
+Vector<Entity> entities = Vector<Entity>(entitiesStorage);
 
 RenderSystem renderSystem(&appliance);
 MovementSystem movementSystem;
@@ -32,16 +34,17 @@ Entity ball;
 BallSprite ballSprite;
 PaddleSprite paddleSprite;
 
-Vector<RenderComponent> renderComponents;
-Vector<BouncingBoxComponent*> bouncingBoxComponents;
+RenderComponent renderComponentsStorage[3];
+Vector<RenderComponent> renderComponents = 
+    Vector<RenderComponent>(renderComponentsStorage);
+
+BouncingBoxComponent bouncingBoxComponentsStorage[2];
+Vector<BouncingBoxComponent> bouncingBoxComponents = 
+    Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
 
 void setup() {
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();
-
-    entities.push_back(leftPaddle);
-    entities.push_back(rightPaddle);
-    entities.push_back(ball);
 
     renderSystem.begin();
 
@@ -52,14 +55,19 @@ void setup() {
     ball.bouncingBoxComponent.width = ballSprite.getWidth();
     ball.bouncingBoxComponent.height = ballSprite.getHeight();
     ball.bouncingBoxComponent.entity = &ball;
-    bouncingBoxComponents.push_back(&ball.bouncingBoxComponent);
 
     rightPaddle.renderComponent.sprite = &paddleSprite;
-    rightPaddle.positionComponent.position = {152, 0};
+    rightPaddle.positionComponent.position = {156, 2};
     rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
     rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
     rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
-    bouncingBoxComponents.push_back(&rightPaddle.bouncingBoxComponent);
+
+    entities.push_back(leftPaddle);
+    entities.push_back(rightPaddle);
+    entities.push_back(ball);
+
+    bouncingBoxComponents.push_back(ball.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
 }
 
 void loop() {
