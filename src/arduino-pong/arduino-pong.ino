@@ -39,13 +39,8 @@ BallSprite ballSprite;
 PaddleSprite paddleSprite;
 HorizontalBorderSprite horizontalBorderSprite;
 
-RenderComponent renderComponentsStorage[3];
-Vector<RenderComponent> renderComponents = 
-    Vector<RenderComponent>(renderComponentsStorage);
-
-BouncingBoxComponent bouncingBoxComponentsStorage[5];
-Vector<BouncingBoxComponent> bouncingBoxComponents = 
-    Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
+Vector<RenderComponent> renderComponents;
+Vector<BouncingBoxComponent> bouncingBoxComponents;
 
 PongECSFactory ecsFactory;
 
