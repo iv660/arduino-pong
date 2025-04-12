@@ -5,10 +5,16 @@
 class MovementSystem
 {
     private:
-        unsigned long nextUpdateTime = 0;
-        unsigned long const updatePeriod = 20;
+        void updateX(Entity* entity);
+        void updateY(Entity* entity);
+        bool isTimeToUpdateX(Entity* entity);
+        bool isTimeToUpdateY(Entity* entity);
+        long timeSinceLastUpdateX(Entity* entity);
+        long timeSinceLastUpdateY(Entity* entity);
+        long updateIntervalX(Entity* entity);
+        long updateIntervalY(Entity* entity);
 
-        bool isTimeToUpdate();
+        int copysign(long x);
     public:
         void update(Entity* entity);
 };
