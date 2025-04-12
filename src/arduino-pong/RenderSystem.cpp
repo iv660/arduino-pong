@@ -19,8 +19,14 @@ void RenderSystem::redraw(Entity* entity)
         return;
     }
 
-    entity->renderComponent.sprite
-        ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
+    if (
+        entity->renderComponent.previousPosition.x != -1 
+        && entity->renderComponent.previousPosition.y != -1
+    ) {
+        entity->renderComponent.sprite
+            ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
+    }
+    
     entity->renderComponent.sprite
         ->drawOn(appliance->screen, entity->positionComponent.position);
     entity->renderComponent.previousPosition = 
