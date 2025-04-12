@@ -11,9 +11,6 @@ void RenderSystem::begin()
 {
     appliance->screen->begin();
     appliance->screen->background(0, 0, 0);
-    // appliance->screen->stroke(0, 0, 0);
-    // appliance->screen->fill(0, 0, 0);
-    // appliance->screen->rect(0, 0, appliance->screen->width(), appliance->screen->height());
 }
 
 void RenderSystem::redraw(Entity* entity)

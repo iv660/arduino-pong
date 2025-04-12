@@ -2,20 +2,23 @@
 
 #include <ScreenInterface.h>
 
-#include "Position.h"
 #include "SpriteInterface.h"
+#include "Position.h"
 
 using XC::Hardware::ScreenInterface;
 
-class PaddleSprite: public SpriteInterface
+class HorizontalBorderSprite: public SpriteInterface 
 {
     private:
-        int const width = 4;
-        int const height = 122;
+        ScreenInterface* screen;
+
+        int const height = 2;
     public:
         void drawOn(ScreenInterface* screen, Position position) override;
         void eraseFrom(ScreenInterface* screen, Position position) override;
-
         int getWidth() override;
         int getHeight() override;
+
+        void setScreen(ScreenInterface* screen);
 };
+
