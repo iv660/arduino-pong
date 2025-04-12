@@ -11,7 +11,7 @@ class PaddleSprite: public SpriteInterface
 {
     private:
         int const width = 4;
-        int const height = 24;
+        int const height = 124;
     public:
         void drawOn(ScreenInterface* screen, Position position) override;
         void eraseFrom(ScreenInterface* screen, Position position) override;

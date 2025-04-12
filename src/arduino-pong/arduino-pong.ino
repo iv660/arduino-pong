@@ -57,10 +57,16 @@ void setup() {
     ball.bouncingBoxComponent.entity = &ball;
 
     rightPaddle.renderComponent.sprite = &paddleSprite;
-    rightPaddle.positionComponent.position = {156, 80};
+    rightPaddle.positionComponent.position = {156, 2};
     rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
     rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
     rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
+
+    leftPaddle.renderComponent.sprite = &paddleSprite;
+    leftPaddle.positionComponent.position = {0, 2};
+    leftPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
+    leftPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
+    leftPaddle.bouncingBoxComponent.entity = &rightPaddle;
 
     entities.push_back(leftPaddle);
     entities.push_back(rightPaddle);
@@ -68,6 +74,7 @@ void setup() {
 
     bouncingBoxComponents.push_back(ball.bouncingBoxComponent);
     bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(leftPaddle.bouncingBoxComponent);
 }
 
 void loop() {
@@ -77,4 +84,5 @@ void loop() {
 
     renderSystem.redraw(&ball);
     renderSystem.redraw(&rightPaddle);
+    renderSystem.redraw(&leftPaddle);
 }
