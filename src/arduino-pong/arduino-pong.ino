@@ -3,6 +3,7 @@
 #include <Appliance.h>
 #include <Arduino.h>
 
+#include "PongECSFactory.h"
 #include "BallSprite.h"
 #include "Position.h"
 #include "RenderComponent.h"
@@ -28,11 +29,11 @@ RenderSystem renderSystem(&appliance);
 MovementSystem movementSystem;
 CollisionSystem collisionSystem;
 
-Entity leftPaddle;
-Entity rightPaddle;
-Entity ball;
-Entity topBorder;
-Entity bottomBorder;
+Entity *leftPaddle;
+Entity *rightPaddle;
+Entity *ball;
+Entity *topBorder;
+Entity *bottomBorder;
 
 BallSprite ballSprite;
 PaddleSprite paddleSprite;
@@ -46,68 +47,35 @@ BouncingBoxComponent bouncingBoxComponentsStorage[5];
 Vector<BouncingBoxComponent> bouncingBoxComponents = 
     Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
 
+PongECSFactory ecsFactory;
 
 void setup() {
     applianceFactory.useJoystick().asAnalogJoystick();
-    appliance = applianceFactory.createAppliance();
+    appliance = applianceFactory.createAppliance();  
 
-    horizontalBorderSprite.setScreen(appliance.screen);
-
+    ecsFactory.begin(&appliance);  
+    
     renderSystem.begin();
 
-    ball.renderComponent.sprite = &ballSprite;
-    ball.positionComponent.position = {45, 60};
-    ball.movementComponent.xMovement.velocity = 3;
-    ball.movementComponent.yMovement.velocity = -1;
-    ball.bouncingBoxComponent.width = ballSprite.getWidth();
-    ball.bouncingBoxComponent.height = ballSprite.getHeight();
-    ball.bouncingBoxComponent.entity = &ball;
+    entities = ecsFactory.getEntities();
+    renderComponents = ecsFactory.getRenderComponents();
+    bouncingBoxComponents = ecsFactory.getBouncingBoxComponents();
 
-    rightPaddle.renderComponent.sprite = &paddleSprite;
-    rightPaddle.positionComponent.position = {156, 3};
-    rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
-    rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
-    rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
-
-    leftPaddle.renderComponent.sprite = &paddleSprite;
-    leftPaddle.positionComponent.position = {0, horizontalBorderSprite.getHeight() + 1};
-    leftPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
-    leftPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
-    leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
-
-    topBorder.renderComponent.sprite = &horizontalBorderSprite;
-    topBorder.positionComponent.position = {0, 0};
-    topBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
-    topBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
-    topBorder.bouncingBoxComponent.entity = &topBorder;
-
-    bottomBorder.renderComponent.sprite = &horizontalBorderSprite;
-    bottomBorder.positionComponent.position = {0, appliance.screen->height() - horizontalBorderSprite.getHeight()};
-    bottomBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
-    bottomBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
-    bottomBorder.bouncingBoxComponent.entity = &bottomBorder;
-
-    entities.push_back(leftPaddle);
-    entities.push_back(rightPaddle);
-    entities.push_back(ball);
-    entities.push_back(topBorder);
-    entities.push_back(bottomBorder);
-
-    bouncingBoxComponents.push_back(ball.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(leftPaddle.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(topBorder.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
+    ball = ecsFactory.getBallEntity();
+    rightPaddle = ecsFactory.getRightPaddleEntity();
+    leftPaddle = ecsFactory.getLeftPaddleEntity();
+    topBorder = ecsFactory.getTopBorderEntity();
+    bottomBorder = ecsFactory.getBottomBorderEntity();
 }
 
 void loop() {
     collisionSystem.update(bouncingBoxComponents);
 
-    movementSystem.update(&ball);
+    movementSystem.update(ball);
 
-    renderSystem.redraw(&ball);
-    renderSystem.redraw(&rightPaddle);
-    renderSystem.redraw(&leftPaddle);
-    renderSystem.redraw(&topBorder);
-    renderSystem.redraw(&bottomBorder);
+    renderSystem.redraw(ball);
+    renderSystem.redraw(rightPaddle);
+    renderSystem.redraw(leftPaddle);
+    renderSystem.redraw(topBorder);
+    renderSystem.redraw(bottomBorder);
 }
