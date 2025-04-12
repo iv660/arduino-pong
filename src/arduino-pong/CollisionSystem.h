@@ -16,6 +16,9 @@ class CollisionSystem
         bool hitsFromRight(Entity * entity1, Entity * entity2);
         bool hitsFromTop(Entity * entity1, Entity * entity2);
         bool hitsFromBottom(Entity * entity1, Entity * entity2);
+
+        bool areOnSameHeight(Entity * entity1, Entity * entity2);
+        bool areOnSameWidth(Entity * entity1, Entity * entity2);
         
         void bounceVertically(Entity *entity);
         void bounceHorizontally(Entity *entity);

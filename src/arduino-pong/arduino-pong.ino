@@ -57,7 +57,7 @@ void setup() {
     ball.bouncingBoxComponent.entity = &ball;
 
     rightPaddle.renderComponent.sprite = &paddleSprite;
-    rightPaddle.positionComponent.position = {156, 2};
+    rightPaddle.positionComponent.position = {156, 80};
     rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
     rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
     rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
