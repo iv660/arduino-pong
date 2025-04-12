@@ -42,9 +42,10 @@ RenderComponent renderComponentsStorage[3];
 Vector<RenderComponent> renderComponents = 
     Vector<RenderComponent>(renderComponentsStorage);
 
-BouncingBoxComponent bouncingBoxComponentsStorage[2];
+BouncingBoxComponent bouncingBoxComponentsStorage[5];
 Vector<BouncingBoxComponent> bouncingBoxComponents = 
     Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
+
 
 void setup() {
     applianceFactory.useJoystick().asAnalogJoystick();
@@ -96,7 +97,7 @@ void setup() {
     bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
     bouncingBoxComponents.push_back(leftPaddle.bouncingBoxComponent);
     bouncingBoxComponents.push_back(topBorder.bouncingBoxComponent);
-    // bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
 }
 
 void loop() {
