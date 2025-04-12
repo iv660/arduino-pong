@@ -47,7 +47,6 @@ void setup() {
 
     ball.renderComponent.sprite = &ballSprite;
     ball.positionComponent.position = {45, 60};
-    ball.movementComponent.velocity = {3, -1};
     ball.movementComponent.xMovement.velocity = 3;
     ball.movementComponent.yMovement.velocity = -1;
     ball.bouncingBoxComponent.width = ballSprite.getWidth();
