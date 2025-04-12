@@ -6,13 +6,13 @@ struct MovementComponent {
         int y;
     };
 
-    // struct AxisMovementState {
-    //     int velocity;
-    //     long updatedAtMillis;
-    // }
+    struct AxisMovement {
+        int velocity;
+        long updatedAtMillis;
+    };
 
-    // AxisMovementState xMovementState = {0, 0};
-    // AxisMovementState yMovementState = {0, 0};
+    AxisMovement xMovement = {0, 0};
+    AxisMovement yMovement = {0, 0};
 
     Velocity velocity;
 
