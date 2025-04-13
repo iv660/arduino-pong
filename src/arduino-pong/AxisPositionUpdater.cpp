@@ -19,6 +19,10 @@ long AxisPositionUpdater::getTimeSinceLastUpdate()
 
 bool AxisPositionUpdater::isTimeToUpdate()
 {
+    if (axisMovement->velocity == 0) {
+        return false;
+    }
+    
     return getTimeSinceLastUpdate() > getUpdateInterval();
 }
 

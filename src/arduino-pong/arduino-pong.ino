@@ -15,6 +15,8 @@
 #include "BouncingBoxComponent.h"
 #include "CollisionSystem.h"
 #include "HorizontalBorderSprite.h"
+#include "ServiceComponent.h"
+#include "ServiceSystem.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
@@ -28,12 +30,14 @@ Vector<Entity> entities = Vector<Entity>(entitiesStorage);
 RenderSystem renderSystem(&appliance);
 MovementSystem movementSystem;
 CollisionSystem collisionSystem;
+ServiceSystem serviceSystem;
 
 Entity *leftPaddle;
 Entity *rightPaddle;
 Entity *ball;
 Entity *topBorder;
 Entity *bottomBorder;
+Entity *leftPlayerService;
 
 BallSprite ballSprite;
 PaddleSprite paddleSprite;
@@ -41,10 +45,13 @@ HorizontalBorderSprite horizontalBorderSprite;
 
 Vector<RenderComponent> renderComponents;
 Vector<BouncingBoxComponent> bouncingBoxComponents;
+Vector<ServiceComponent*> serviceComponents;
 
 PongECSFactory ecsFactory;
 
 void setup() {
+    Serial.begin(115200);
+
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();  
 
@@ -55,17 +62,23 @@ void setup() {
     entities = ecsFactory.getEntities();
     renderComponents = ecsFactory.getRenderComponents();
     bouncingBoxComponents = ecsFactory.getBouncingBoxComponents();
+    serviceComponents = ecsFactory.getServiceComponents();
 
     ball = ecsFactory.getBallEntity();
     rightPaddle = ecsFactory.getRightPaddleEntity();
     leftPaddle = ecsFactory.getLeftPaddleEntity();
     topBorder = ecsFactory.getTopBorderEntity();
     bottomBorder = ecsFactory.getBottomBorderEntity();
+    leftPlayerService = ecsFactory.getLeftPlayerServiceEntity();
+
+    leftPlayerService->serviceComponent.isRequested = true;
+    Serial.print("Left player service is requested: "); Serial.println(leftPlayerService->serviceComponent.isRequested);
+    Serial.print("Left player service is requested in vector: "); Serial.println(serviceComponents[0]->isRequested);
 }
 
 void loop() {
+    serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);
-
     collisionSystem.update(bouncingBoxComponents);
 
     renderSystem.redraw(ball);

@@ -11,6 +11,7 @@
 #include "PaddleSprite.h"
 #include "BouncingBoxComponent.h"
 #include "HorizontalBorderSprite.h"
+#include "ServiceComponent.h"
 
 using XC::Hardware::Appliance;
 
@@ -22,7 +23,7 @@ class PongECSFactory
         PaddleSprite paddleSprite;
         HorizontalBorderSprite horizontalBorderSprite;
 
-        Entity entitiesStorage[3];
+        Entity entitiesStorage[6];
         Vector<Entity> entities;
 
         RenderComponent renderComponentsStorage[3];
@@ -31,21 +32,29 @@ class PongECSFactory
         BouncingBoxComponent bouncingBoxComponentsStorage[5];
         Vector<BouncingBoxComponent> bouncingBoxComponents;
 
+        ServiceComponent* serviceComponentsStorage[2];
+        Vector<ServiceComponent*> serviceComponents;
+
         Entity ball;
         Entity rightPaddle;
         Entity leftPaddle;
         Entity topBorder;
         Entity bottomBorder;
+        Entity leftPlayerService;
 
     public:
         begin(Appliance *appliance);
         Vector<Entity> getEntities();
+
         Vector<RenderComponent> getRenderComponents();
         Vector<BouncingBoxComponent> getBouncingBoxComponents();
+        Vector<ServiceComponent*> getServiceComponents();
+        
         Entity *getBallEntity();
         Entity *getRightPaddleEntity();
         Entity *getLeftPaddleEntity();
         Entity *getTopBorderEntity();
         Entity *getBottomBorderEntity();
+        Entity *getLeftPlayerServiceEntity();
 };
 

@@ -5,6 +5,7 @@ using XC::Hardware::Appliance;
 PongECSFactory::begin(Appliance *appliance) {
     renderComponents = Vector<RenderComponent>(renderComponentsStorage);
     bouncingBoxComponents = Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
+    serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     entities = Vector<Entity>(entitiesStorage);
 
     this->appliance = appliance;
@@ -12,8 +13,8 @@ PongECSFactory::begin(Appliance *appliance) {
 
     ball.renderComponent.sprite = &ballSprite;
     ball.positionComponent.position = {45, 60};
-    ball.movementComponent.xMovement.velocity = 3;
-    ball.movementComponent.yMovement.velocity = -1;
+    ball.movementComponent.xMovement.velocity = 0;
+    ball.movementComponent.yMovement.velocity = 0;
     ball.bouncingBoxComponent.width = ballSprite.getWidth();
     ball.bouncingBoxComponent.height = ballSprite.getHeight();
     ball.bouncingBoxComponent.entity = &ball;
@@ -42,17 +43,24 @@ PongECSFactory::begin(Appliance *appliance) {
     bottomBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
     bottomBorder.bouncingBoxComponent.entity = &bottomBorder;
 
+    leftPlayerService.positionComponent.position = {45, 60};
+    leftPlayerService.serviceComponent.serviceXVelocity = 3;
+    leftPlayerService.serviceComponent.entity = &leftPlayerService;
+
     entities.push_back(leftPaddle);
     entities.push_back(rightPaddle);
     entities.push_back(ball);
     entities.push_back(topBorder);
     entities.push_back(bottomBorder);
+    entities.push_back(leftPlayerService);
 
     bouncingBoxComponents.push_back(ball.bouncingBoxComponent);
     bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
     bouncingBoxComponents.push_back(leftPaddle.bouncingBoxComponent);
     bouncingBoxComponents.push_back(topBorder.bouncingBoxComponent);
     bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
+
+    serviceComponents.push_back(&leftPlayerService.serviceComponent);
 }
 
 Vector<Entity> PongECSFactory::getEntities() {
@@ -65,6 +73,11 @@ Vector<RenderComponent> PongECSFactory::getRenderComponents() {
 
 Vector<BouncingBoxComponent> PongECSFactory::getBouncingBoxComponents() {
     return bouncingBoxComponents;
+}
+
+Vector<ServiceComponent*> PongECSFactory::getServiceComponents()
+{
+    return serviceComponents;
 }
 
 Entity *PongECSFactory::getBallEntity() {
@@ -85,4 +98,9 @@ Entity *PongECSFactory::getTopBorderEntity() {
 
 Entity *PongECSFactory::getBottomBorderEntity() {
     return &bottomBorder;
+}
+
+Entity * PongECSFactory::getLeftPlayerServiceEntity()
+{
+    return &leftPlayerService;
 }
