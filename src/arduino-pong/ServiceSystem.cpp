@@ -22,8 +22,6 @@ void ServiceSystem::prepareForService(ServiceComponent *serviceComponent, Entity
 
     serviceComponent->serveAtMillis = millis() + waitMillis;
     serviceComponent->isRequested = false;
-
-    Serial.println("Service is prepared");
 }
 
 void ServiceSystem::serve(ServiceComponent *serviceComponent, Entity *ball)
@@ -38,15 +36,11 @@ void ServiceSystem::handle(Vector<ServiceComponent*> serviceComponents, Entity* 
 {
     for (auto serviceComponent: serviceComponents) {
         if (isRequestedFor(serviceComponent)) {
-            Serial.println("Service is requested");
             prepareForService(serviceComponent, ball);
-            Serial.println("Service is prepared");
         }
 
         if (isTimeToServe(serviceComponent)) {
-            Serial.println("It's time to serve");
             serve(serviceComponent, ball); 
-            Serial.println("Ball is served");
         } 
     }
 }

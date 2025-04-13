@@ -50,8 +50,6 @@ Vector<ServiceComponent*> serviceComponents;
 PongECSFactory ecsFactory;
 
 void setup() {
-    Serial.begin(115200);
-
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();  
 
@@ -72,8 +70,6 @@ void setup() {
     leftPlayerService = ecsFactory.getLeftPlayerServiceEntity();
 
     leftPlayerService->serviceComponent.isRequested = true;
-    Serial.print("Left player service is requested: "); Serial.println(leftPlayerService->serviceComponent.isRequested);
-    Serial.print("Left player service is requested in vector: "); Serial.println(serviceComponents[0]->isRequested);
 }
 
 void loop() {
