@@ -22,21 +22,21 @@ bool CollisionSystem::movesDown(Entity * entity)
 
 bool CollisionSystem::hitsFromLeft(Entity * entity1, Entity * entity2)
 {
-    return entity1->positionComponent.position.x + entity1->bouncingBoxComponent.width == entity2->positionComponent.position.x - 1;
+    return entity1->positionComponent.position.x + entity1->bouncingBoxComponent.width == entity2->positionComponent.position.x;
 }
 bool CollisionSystem::hitsFromRight(Entity * entity1, Entity * entity2)
 {
-    return entity1->positionComponent.position.x == entity2->positionComponent.position.x + entity2->bouncingBoxComponent.width + 1;
+    return entity1->positionComponent.position.x == entity2->positionComponent.position.x + entity2->bouncingBoxComponent.width;
 }
 
 bool CollisionSystem::hitsFromTop(Entity * entity1, Entity * entity2)
 {
-    return entity1->positionComponent.position.y + entity1->bouncingBoxComponent.height == entity2->positionComponent.position.y - 1;
+    return entity1->positionComponent.position.y + entity1->bouncingBoxComponent.height == entity2->positionComponent.position.y;
 }
 
 bool CollisionSystem::hitsFromBottom(Entity * entity1, Entity * entity2)
 {
-    return entity1->positionComponent.position.y == entity2->positionComponent.position.y + entity2->bouncingBoxComponent.height + 1;
+    return entity1->positionComponent.position.y == entity2->positionComponent.position.y + entity2->bouncingBoxComponent.height;
 }
 
 bool CollisionSystem::areOnSameHeight(Entity * entity1, Entity * entity2)

@@ -64,9 +64,9 @@ void setup() {
 }
 
 void loop() {
-    collisionSystem.update(bouncingBoxComponents);
-
     movementSystem.update(ball);
+
+    collisionSystem.update(bouncingBoxComponents);
 
     renderSystem.redraw(ball);
     renderSystem.redraw(rightPaddle);
