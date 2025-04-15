@@ -12,6 +12,7 @@
 #include "BouncingBoxComponent.h"
 #include "HorizontalBorderSprite.h"
 #include "ServiceComponent.h"
+#include "GoalComponent.h"
 
 using XC::Hardware::Appliance;
 
@@ -19,6 +20,7 @@ class PongECSFactory
 {
     private:
         Appliance *appliance;
+
         BallSprite ballSprite;
         PaddleSprite paddleSprite;
         HorizontalBorderSprite horizontalBorderSprite;
@@ -35,12 +37,17 @@ class PongECSFactory
         ServiceComponent* serviceComponentsStorage[2];
         Vector<ServiceComponent*> serviceComponents;
 
+        GoalComponent* goalComponentsStorage[2];
+        Vector<GoalComponent*> goalComponents;
+
         Entity ball;
         Entity rightPaddle;
         Entity leftPaddle;
         Entity topBorder;
         Entity bottomBorder;
         Entity leftPlayerService;
+        Entity leftPlayerGoal;
+        Entity rightPlayerGoal;
 
     public:
         begin(Appliance *appliance);
@@ -49,6 +56,7 @@ class PongECSFactory
         Vector<RenderComponent> getRenderComponents();
         Vector<BouncingBoxComponent> getBouncingBoxComponents();
         Vector<ServiceComponent*> getServiceComponents();
+        Vector<GoalComponent*> getGoalComponents();
         
         Entity *getBallEntity();
         Entity *getRightPaddleEntity();

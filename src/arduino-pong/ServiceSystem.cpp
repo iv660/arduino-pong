@@ -27,9 +27,14 @@ void ServiceSystem::prepareForService(ServiceComponent *serviceComponent, Entity
 void ServiceSystem::serve(ServiceComponent *serviceComponent, Entity *ball)
 {
     ball->movementComponent.xMovement.velocity = serviceComponent->serviceXVelocity;
-    ball->movementComponent.yMovement.velocity = -1;
+    ball->movementComponent.yMovement.velocity = getRandomYVelocity();
     
     serviceComponent->serveAtMillis = 0;
+}
+
+int ServiceSystem::getRandomYVelocity()
+{
+    return random(-2, 2);
 }
 
 void ServiceSystem::handle(Vector<ServiceComponent*> serviceComponents, Entity* ball)

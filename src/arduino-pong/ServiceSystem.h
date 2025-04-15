@@ -14,6 +14,8 @@ class ServiceSystem {
 
         void prepareForService(ServiceComponent* serviceComponent, Entity* ball);
         void serve(ServiceComponent* serviceComponent, Entity* ball);
+
+        int getRandomYVelocity();
     public:
         void handle(Vector<ServiceComponent*> serviceComponents, Entity *ball);
 };

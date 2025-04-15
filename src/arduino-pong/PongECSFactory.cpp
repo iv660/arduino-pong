@@ -6,6 +6,8 @@ PongECSFactory::begin(Appliance *appliance) {
     renderComponents = Vector<RenderComponent>(renderComponentsStorage);
     bouncingBoxComponents = Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
+    goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
+
     entities = Vector<Entity>(entitiesStorage);
 
     this->appliance = appliance;
@@ -47,6 +49,16 @@ PongECSFactory::begin(Appliance *appliance) {
     leftPlayerService.serviceComponent.serviceXVelocity = 3;
     leftPlayerService.serviceComponent.entity = &leftPlayerService;
 
+    leftPlayerGoal.positionComponent.position = {0, 0};
+    leftPlayerGoal.goalComponent.height = appliance->screen->height();
+    leftPlayerGoal.goalComponent.service = &leftPlayerService;
+    leftPlayerGoal.goalComponent.entity = &leftPlayerGoal;
+
+    rightPlayerGoal.positionComponent.position = {appliance->screen->width(), 0};
+    rightPlayerGoal.goalComponent.height = appliance->screen->height();
+    rightPlayerGoal.goalComponent.service = &leftPlayerService;
+    rightPlayerGoal.goalComponent.entity = &rightPlayerGoal;
+
     entities.push_back(leftPaddle);
     entities.push_back(rightPaddle);
     entities.push_back(ball);
@@ -61,6 +73,9 @@ PongECSFactory::begin(Appliance *appliance) {
     bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
 
     serviceComponents.push_back(&leftPlayerService.serviceComponent);
+
+    goalComponents.push_back(&leftPlayerGoal.goalComponent);
+    goalComponents.push_back(&rightPlayerGoal.goalComponent);
 }
 
 Vector<Entity> PongECSFactory::getEntities() {
@@ -78,6 +93,11 @@ Vector<BouncingBoxComponent> PongECSFactory::getBouncingBoxComponents() {
 Vector<ServiceComponent*> PongECSFactory::getServiceComponents()
 {
     return serviceComponents;
+}
+
+Vector<GoalComponent*> PongECSFactory::getGoalComponents()
+{
+    return goalComponents;
 }
 
 Entity *PongECSFactory::getBallEntity() {

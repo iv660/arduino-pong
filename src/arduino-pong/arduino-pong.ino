@@ -17,6 +17,7 @@
 #include "HorizontalBorderSprite.h"
 #include "ServiceComponent.h"
 #include "ServiceSystem.h"
+#include "GoalDetectionSystem.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
@@ -31,6 +32,7 @@ RenderSystem renderSystem(&appliance);
 MovementSystem movementSystem;
 CollisionSystem collisionSystem;
 ServiceSystem serviceSystem;
+GoalDetectionSystem goalDetectionSystem;
 
 Entity *leftPaddle;
 Entity *rightPaddle;
@@ -46,10 +48,12 @@ HorizontalBorderSprite horizontalBorderSprite;
 Vector<RenderComponent> renderComponents;
 Vector<BouncingBoxComponent> bouncingBoxComponents;
 Vector<ServiceComponent*> serviceComponents;
+Vector<GoalComponent*> goalComponents;
 
 PongECSFactory ecsFactory;
 
-void setup() {
+void setup() 
+{
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();  
 
@@ -61,6 +65,7 @@ void setup() {
     renderComponents = ecsFactory.getRenderComponents();
     bouncingBoxComponents = ecsFactory.getBouncingBoxComponents();
     serviceComponents = ecsFactory.getServiceComponents();
+    goalComponents = ecsFactory.getGoalComponents();
 
     ball = ecsFactory.getBallEntity();
     rightPaddle = ecsFactory.getRightPaddleEntity();
@@ -72,7 +77,9 @@ void setup() {
     leftPlayerService->serviceComponent.isRequested = true;
 }
 
-void loop() {
+void loop() 
+{
+    goalDetectionSystem.handle(ball, goalComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);
     collisionSystem.update(bouncingBoxComponents);

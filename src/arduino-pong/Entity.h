@@ -5,6 +5,7 @@
 #include "MovementComponent.h"
 #include "BouncingBoxComponent.h"
 #include "ServiceComponent.h"
+#include "GoalComponent.h"
 
 struct Entity {
     PositionComponent positionComponent;
@@ -12,4 +13,5 @@ struct Entity {
     MovementComponent movementComponent;
     BouncingBoxComponent bouncingBoxComponent;
     ServiceComponent serviceComponent;
+    GoalComponent goalComponent;
 };
