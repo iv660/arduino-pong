@@ -9,5 +9,5 @@ struct MovementComponent {
     AxisMovement xMovement = {0, 0};
     AxisMovement yMovement = {0, 0};
 
-    long updateIntervalBase = 20;
+    long updateIntervalBase = 200;
 };

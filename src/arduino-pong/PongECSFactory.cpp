@@ -46,7 +46,7 @@ PongECSFactory::begin(Appliance *appliance) {
     bottomBorder.bouncingBoxComponent.entity = &bottomBorder;
 
     leftPlayerService.positionComponent.position = {45, 60};
-    leftPlayerService.serviceComponent.serviceXVelocity = 3;
+    leftPlayerService.serviceComponent.serviceXVelocity = 30;
     leftPlayerService.serviceComponent.entity = &leftPlayerService;
 
     leftPlayerGoal.positionComponent.position = {0, 0};

@@ -34,7 +34,7 @@ void ServiceSystem::serve(ServiceComponent *serviceComponent, Entity *ball)
 
 int ServiceSystem::getRandomYVelocity()
 {
-    return random(-2, 2);
+    return random(-20, 20);
 }
 
 void ServiceSystem::handle(Vector<ServiceComponent*> serviceComponents, Entity* ball)
