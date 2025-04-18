@@ -49,6 +49,7 @@ class PongECSFactory
         Entity topBorder;
         Entity bottomBorder;
         Entity leftPlayerService;
+        Entity rightPlayerService;
         Entity leftPlayerGoal;
         Entity rightPlayerGoal;
 
