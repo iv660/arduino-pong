@@ -4,6 +4,7 @@
 #include <Vector.h>
 
 #include "PositionControlComponent.h"
+#include "Entity.h"
 
 using XC::Hardware::Appliance;
 
@@ -14,5 +15,5 @@ class ManualPositionControlSystem
     public:
         ManualPositionControlSystem(Appliance* appliance): appliance(appliance) {};
 
-        void update(Vector<PositionControlComponent*> components);
+        void update(Entity* entity);
 };

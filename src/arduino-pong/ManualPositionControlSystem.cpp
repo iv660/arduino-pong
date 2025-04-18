@@ -2,12 +2,9 @@
 
 #include "Entity.h"
 
-void ManualPositionControlSystem::update(Vector<PositionControlComponent*> components)
+void ManualPositionControlSystem::update(Entity *entity)
 {
-    for (PositionControlComponent* component : components) {
-        component->entity->positionComponent.position.y = 
+    entity->positionComponent.position.y = 
             map(appliance->analogJoystick->getY(), 0, 1023,     
-                component->range.from, component->range.to);
-        Serial.print("Joystick position: "); Serial.println(appliance->analogJoystick->getY());
-    }
+                entity->positionControlComponent.range.from, entity->positionControlComponent.range.to);
 }

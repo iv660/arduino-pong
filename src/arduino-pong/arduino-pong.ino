@@ -58,8 +58,6 @@ PongECSFactory ecsFactory;
 
 void setup() 
 {
-    Serial.begin(115200);
-    
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();  
 
@@ -86,7 +84,8 @@ void setup()
 
 void loop() 
 {
-    playerControlSystem.update(positionControlComponents);
+    playerControlSystem.update(rightPaddle);
+    playerControlSystem.update(leftPaddle);
     goalDetectionSystem.handle(ball, goalComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);
