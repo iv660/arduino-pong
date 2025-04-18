@@ -6,6 +6,7 @@
 #include "BouncingBoxComponent.h"
 #include "ServiceComponent.h"
 #include "GoalComponent.h"
+#include "PositionControlComponent.h"
 
 struct Entity {
     PositionComponent positionComponent;
@@ -14,4 +15,5 @@ struct Entity {
     BouncingBoxComponent bouncingBoxComponent;
     ServiceComponent serviceComponent;
     GoalComponent goalComponent;
+    PositionControlComponent positionControlComponent;
 };

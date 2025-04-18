@@ -40,6 +40,9 @@ class PongECSFactory
         GoalComponent* goalComponentsStorage[2];
         Vector<GoalComponent*> goalComponents;
 
+        PositionControlComponent* positionControlComponentsStorage[2];
+        Vector<PositionControlComponent*> positionControlComponents;
+
         Entity ball;
         Entity rightPaddle;
         Entity leftPaddle;
@@ -57,6 +60,7 @@ class PongECSFactory
         Vector<BouncingBoxComponent> getBouncingBoxComponents();
         Vector<ServiceComponent*> getServiceComponents();
         Vector<GoalComponent*> getGoalComponents();
+        Vector<PositionControlComponent*> getPositionControlComponents();
         
         Entity *getBallEntity();
         Entity *getRightPaddleEntity();

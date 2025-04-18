@@ -18,6 +18,8 @@
 #include "ServiceComponent.h"
 #include "ServiceSystem.h"
 #include "GoalDetectionSystem.h"
+#include "PositionControlComponent.h"
+#include "ManualPositionControlSystem.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
@@ -33,6 +35,7 @@ MovementSystem movementSystem;
 CollisionSystem collisionSystem;
 ServiceSystem serviceSystem;
 GoalDetectionSystem goalDetectionSystem;
+ManualPositionControlSystem playerControlSystem(&appliance);
 
 Entity *leftPaddle;
 Entity *rightPaddle;
@@ -49,11 +52,14 @@ Vector<RenderComponent> renderComponents;
 Vector<BouncingBoxComponent> bouncingBoxComponents;
 Vector<ServiceComponent*> serviceComponents;
 Vector<GoalComponent*> goalComponents;
+Vector<PositionControlComponent*> positionControlComponents;
 
 PongECSFactory ecsFactory;
 
 void setup() 
 {
+    Serial.begin(115200);
+    
     applianceFactory.useJoystick().asAnalogJoystick();
     appliance = applianceFactory.createAppliance();  
 
@@ -66,6 +72,7 @@ void setup()
     bouncingBoxComponents = ecsFactory.getBouncingBoxComponents();
     serviceComponents = ecsFactory.getServiceComponents();
     goalComponents = ecsFactory.getGoalComponents();
+    positionControlComponents = ecsFactory.getPositionControlComponents();
 
     ball = ecsFactory.getBallEntity();
     rightPaddle = ecsFactory.getRightPaddleEntity();
@@ -79,6 +86,7 @@ void setup()
 
 void loop() 
 {
+    playerControlSystem.update(positionControlComponents);
     goalDetectionSystem.handle(ball, goalComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);

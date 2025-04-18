@@ -7,6 +7,7 @@ PongECSFactory::begin(Appliance *appliance) {
     bouncingBoxComponents = Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
+    positionControlComponents = Vector<PositionControlComponent*>(positionControlComponentsStorage);
 
     entities = Vector<Entity>(entitiesStorage);
 
@@ -21,18 +22,6 @@ PongECSFactory::begin(Appliance *appliance) {
     ball.bouncingBoxComponent.height = ballSprite.getHeight();
     ball.bouncingBoxComponent.entity = &ball;
 
-    rightPaddle.renderComponent.sprite = &paddleSprite;
-    rightPaddle.positionComponent.position = {156, 3};
-    rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
-    rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
-    rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
-
-    leftPaddle.renderComponent.sprite = &paddleSprite;
-    leftPaddle.positionComponent.position = {0, horizontalBorderSprite.getHeight() + 1};
-    leftPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
-    leftPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
-    leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
-
     topBorder.renderComponent.sprite = &horizontalBorderSprite;
     topBorder.positionComponent.position = {0, 0};
     topBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
@@ -44,6 +33,32 @@ PongECSFactory::begin(Appliance *appliance) {
     bottomBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
     bottomBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
     bottomBorder.bouncingBoxComponent.entity = &bottomBorder;
+
+    leftPaddle.renderComponent.sprite = &paddleSprite;
+    leftPaddle.positionComponent.position = {0, horizontalBorderSprite.getHeight() + 1};
+    leftPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
+    leftPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
+
+    rightPaddle.renderComponent.sprite = &paddleSprite;
+    rightPaddle.positionComponent.position = {156, 3};
+    rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
+    rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
+    
+    // This code requires the components' sprite to be initialized first
+    // Don't move the code above the initialization of paddles components
+    leftPaddle.positionControlComponent.range = {
+        topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
+        appliance->screen->height() - (topBorder.renderComponent.sprite->getHeight() + 1) - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
+    };
+    rightPaddle.positionControlComponent.range = {
+        topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
+        appliance->screen->height() - (topBorder.renderComponent.sprite->getHeight() + 1) - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
+    };
+
+    leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
+    leftPaddle.positionControlComponent.entity = &leftPaddle;
+    rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
+    rightPaddle.positionControlComponent.entity = &rightPaddle;
 
     leftPlayerService.positionComponent.position = {45, 60};
     leftPlayerService.serviceComponent.serviceXVelocity = 30;
@@ -76,6 +91,9 @@ PongECSFactory::begin(Appliance *appliance) {
 
     goalComponents.push_back(&leftPlayerGoal.goalComponent);
     goalComponents.push_back(&rightPlayerGoal.goalComponent);
+
+    positionControlComponents.push_back(&leftPaddle.positionControlComponent);
+    positionControlComponents.push_back(&rightPaddle.positionControlComponent);
 }
 
 Vector<Entity> PongECSFactory::getEntities() {
@@ -98,6 +116,11 @@ Vector<ServiceComponent*> PongECSFactory::getServiceComponents()
 Vector<GoalComponent*> PongECSFactory::getGoalComponents()
 {
     return goalComponents;
+}
+
+Vector<PositionControlComponent*> PongECSFactory::getPositionControlComponents()
+{
+    return positionControlComponents;
 }
 
 Entity *PongECSFactory::getBallEntity() {
