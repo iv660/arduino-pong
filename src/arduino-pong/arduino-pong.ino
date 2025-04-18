@@ -20,6 +20,7 @@
 #include "GoalDetectionSystem.h"
 #include "PositionControlComponent.h"
 #include "ManualPositionControlSystem.h"
+#include "PositionFollowingSystem.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
@@ -36,6 +37,7 @@ CollisionSystem collisionSystem;
 ServiceSystem serviceSystem;
 GoalDetectionSystem goalDetectionSystem;
 ManualPositionControlSystem playerControlSystem(&appliance);
+PositionFollowingSystem aiControlSystem;
 
 Entity *leftPaddle;
 Entity *rightPaddle;
@@ -85,7 +87,7 @@ void setup()
 void loop() 
 {
     playerControlSystem.update(rightPaddle);
-    playerControlSystem.update(leftPaddle);
+    aiControlSystem.update(leftPaddle);
     goalDetectionSystem.handle(ball, goalComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);

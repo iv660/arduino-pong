@@ -48,12 +48,15 @@ PongECSFactory::begin(Appliance *appliance) {
     // Don't move the code above the initialization of paddles components
     leftPaddle.positionControlComponent.range = {
         topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
-        appliance->screen->height() - (topBorder.renderComponent.sprite->getHeight() + 1) - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
+        appliance->screen->height() - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
     rightPaddle.positionControlComponent.range = {
         topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
-        appliance->screen->height() - (topBorder.renderComponent.sprite->getHeight() + 1) - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
+        appliance->screen->height() - rightPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
+
+    leftPaddle.positionFollowingComponent.entity = &leftPaddle;
+    leftPaddle.positionFollowingComponent.trackedEntity = &ball;
 
     leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
     leftPaddle.positionControlComponent.entity = &leftPaddle;

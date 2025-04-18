@@ -7,6 +7,7 @@
 #include "ServiceComponent.h"
 #include "GoalComponent.h"
 #include "PositionControlComponent.h"
+#include "PositionFollowingComponent.h"
 
 struct Entity {
     PositionComponent positionComponent;
@@ -16,4 +17,5 @@ struct Entity {
     ServiceComponent serviceComponent;
     GoalComponent goalComponent;
     PositionControlComponent positionControlComponent;
+    PositionFollowingComponent positionFollowingComponent;
 };
