@@ -1,5 +1,7 @@
 #include "CollisionSystem.h"
 
+#include <Arduino.h>
+
 bool CollisionSystem::movesLeft(Entity * entity)
 {
     return entity->movementComponent.xMovement.velocity < 0;
@@ -94,19 +96,46 @@ bool CollisionSystem::areOnSameWidth(Entity * entity1, Entity * entity2)
 void CollisionSystem::bounceVertically(Entity *entity)
 {
     entity->movementComponent.yMovement.velocity *= -1;
+    entity->bouncingBoxComponent.hitsCount++;
 }
 
 void CollisionSystem::bounceHorizontally(Entity *entity)
 {
     entity->movementComponent.xMovement.velocity *= -1;
+    entity->bouncingBoxComponent.hitsCount++;
 }
 
-void CollisionSystem::update(Vector<BouncingBoxComponent> bouncingBoxComponents)
+bool CollisionSystem::serviceIsRequestedForAnyOf(Vector<ServiceComponent*> serviceComponents)
+{
+    for (auto serviceComponent: serviceComponents) {
+        if (serviceComponent->isRequested) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void CollisionSystem::resetHitsCounters(Vector<BouncingBoxComponent*> bouncingBoxComponents)
+{
+    for (auto bouncingBoxComponent: bouncingBoxComponents) {
+        bouncingBoxComponent->hitsCount = 0;
+    }
+}
+
+void CollisionSystem::unfreezePositionFollowing(Vector<PositionFollowingComponent*> positionFollowingComponents)
+{
+    for (auto positionFollowingComponent: positionFollowingComponents) {
+        positionFollowingComponent->isFollowing = true;
+    }
+}
+
+void CollisionSystem::update(Vector<BouncingBoxComponent*> bouncingBoxComponents)
 {
     for (int i = 0; i < bouncingBoxComponents.size(); i++) {
         for (int j = i + 1; j < bouncingBoxComponents.size(); j++) {
-            Entity *bouncable1 = bouncingBoxComponents[i].entity;
-            Entity *bouncable2 = bouncingBoxComponents[j].entity;
+            Entity *bouncable1 = bouncingBoxComponents[i]->entity;
+            Entity *bouncable2 = bouncingBoxComponents[j]->entity;
 
             if (movesRight(bouncable1) && hitsFromLeft(bouncable1, bouncable2) && areOnSameHeight(bouncable1, bouncable2)) {
                 bounceHorizontally(bouncable1);
@@ -128,5 +157,13 @@ void CollisionSystem::update(Vector<BouncingBoxComponent> bouncingBoxComponents)
                 bounceVertically(bouncable2);
             }
         }
+    }
+}
+
+void CollisionSystem::afterServiceRequest(Vector<BouncingBoxComponent*> bouncingBoxComponents, Vector<ServiceComponent*> serviceComponents, Vector<PositionFollowingComponent*> positionFollowingComponents)
+{
+    if (serviceIsRequestedForAnyOf(serviceComponents)) {
+        resetHitsCounters(bouncingBoxComponents);
+        unfreezePositionFollowing(positionFollowingComponents);
     }
 }

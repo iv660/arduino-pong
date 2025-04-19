@@ -21,6 +21,7 @@
 #include "PositionControlComponent.h"
 #include "ManualPositionControlSystem.h"
 #include "PositionFollowingSystem.h"
+#include "PositionFollowingComponent.h"
 
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
@@ -51,10 +52,11 @@ PaddleSprite paddleSprite;
 HorizontalBorderSprite horizontalBorderSprite;
 
 Vector<RenderComponent> renderComponents;
-Vector<BouncingBoxComponent> bouncingBoxComponents;
+Vector<BouncingBoxComponent*> bouncingBoxComponents;
 Vector<ServiceComponent*> serviceComponents;
 Vector<GoalComponent*> goalComponents;
 Vector<PositionControlComponent*> positionControlComponents;
+Vector<PositionFollowingComponent*> positionFollowingComponents;
 
 PongECSFactory ecsFactory;
 
@@ -73,6 +75,7 @@ void setup()
     serviceComponents = ecsFactory.getServiceComponents();
     goalComponents = ecsFactory.getGoalComponents();
     positionControlComponents = ecsFactory.getPositionControlComponents();
+    positionFollowingComponents = ecsFactory.getPositionFollowingComponents();
 
     ball = ecsFactory.getBallEntity();
     rightPaddle = ecsFactory.getRightPaddleEntity();
@@ -89,6 +92,7 @@ void loop()
     playerControlSystem.update(rightPaddle);
     aiControlSystem.update(leftPaddle);
     goalDetectionSystem.handle(ball, goalComponents);
+    collisionSystem.afterServiceRequest(bouncingBoxComponents, serviceComponents, positionFollowingComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);
     collisionSystem.update(bouncingBoxComponents);

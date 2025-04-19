@@ -63,6 +63,7 @@ void PongECSFactory::initializePaddlesEntities()
 
     leftPaddle.positionFollowingComponent.entity = &leftPaddle;
     leftPaddle.positionFollowingComponent.trackedEntity = &ball;
+    leftPaddle.positionFollowingComponent.isFollowing = true;
 
     leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
     leftPaddle.positionControlComponent.entity = &leftPaddle;
@@ -112,11 +113,11 @@ void PongECSFactory::populateEntitiesPool()
 
 void PongECSFactory::populateBouncingBoxComponentsPool()
 {
-    bouncingBoxComponents.push_back(ball.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(rightPaddle.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(leftPaddle.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(topBorder.bouncingBoxComponent);
-    bouncingBoxComponents.push_back(bottomBorder.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(&ball.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(&rightPaddle.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(&leftPaddle.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(&topBorder.bouncingBoxComponent);
+    bouncingBoxComponents.push_back(&bottomBorder.bouncingBoxComponent);
 }
 
 void PongECSFactory::populateServiceComponentsPool()
@@ -137,13 +138,19 @@ void PongECSFactory::populatePositionControlComponentsPool()
     positionControlComponents.push_back(&rightPaddle.positionControlComponent);
 }
 
+void PongECSFactory::populatePositionFollowingComponentsPool()
+{
+    positionFollowingComponents.push_back(&leftPaddle.positionFollowingComponent);
+}
+
 void PongECSFactory::initializeComponentPools()
 {
     renderComponents = Vector<RenderComponent>(renderComponentsStorage);
-    bouncingBoxComponents = Vector<BouncingBoxComponent>(bouncingBoxComponentsStorage);
+    bouncingBoxComponents = Vector<BouncingBoxComponent*>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
     positionControlComponents = Vector<PositionControlComponent*>(positionControlComponentsStorage);
+    positionFollowingComponents = Vector<PositionFollowingComponent*>(positionFollowingComponentsStorage);
 }
 
 PongECSFactory::begin(Appliance *appliance) 
@@ -165,6 +172,7 @@ PongECSFactory::begin(Appliance *appliance)
     populateServiceComponentsPool();
     populateGoalComponentsPool();
     populatePositionControlComponentsPool();
+    populatePositionFollowingComponentsPool();
 }
 
 Vector<Entity> PongECSFactory::getEntities() {
@@ -175,7 +183,7 @@ Vector<RenderComponent> PongECSFactory::getRenderComponents() {
     return renderComponents;
 }
 
-Vector<BouncingBoxComponent> PongECSFactory::getBouncingBoxComponents() {
+Vector<BouncingBoxComponent*> PongECSFactory::getBouncingBoxComponents() {
     return bouncingBoxComponents;
 }
 
@@ -192,6 +200,11 @@ Vector<GoalComponent*> PongECSFactory::getGoalComponents()
 Vector<PositionControlComponent*> PongECSFactory::getPositionControlComponents()
 {
     return positionControlComponents;
+}
+
+Vector<PositionFollowingComponent*> PongECSFactory::getPositionFollowingComponents()
+{
+    return positionFollowingComponents;
 }
 
 Entity *PongECSFactory::getBallEntity() {

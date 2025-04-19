@@ -6,5 +6,7 @@ struct PositionFollowingComponent
 {
     Entity* entity;
     Entity* trackedEntity;
+
+    bool isFollowing = true;
 };
 

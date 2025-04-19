@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.h"
+struct Entity;
 
 struct ServiceComponent {
     Entity *entity = nullptr;

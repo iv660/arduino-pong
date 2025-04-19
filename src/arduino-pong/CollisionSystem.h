@@ -2,6 +2,8 @@
 
 #include <Vector.h>
 #include "BouncingBoxComponent.h"
+#include "ServiceComponent.h"
+#include "PositionFollowingComponent.h"
 #include "Entity.h"
 
 class CollisionSystem
@@ -22,6 +24,12 @@ class CollisionSystem
         
         void bounceVertically(Entity *entity);
         void bounceHorizontally(Entity *entity);
+
+        bool serviceIsRequestedForAnyOf(Vector<ServiceComponent*> serviceComponents);
+
+        void resetHitsCounters(Vector<BouncingBoxComponent*> bouncingBoxComponents);
+        void unfreezePositionFollowing(Vector<PositionFollowingComponent*> positionFollowingComponents);
     public:
-        void update(Vector<BouncingBoxComponent> bouncingBoxComponents);
+        void update(Vector<BouncingBoxComponent*> bouncingBoxComponents);
+        void afterServiceRequest(Vector<BouncingBoxComponent*> bouncingBoxComponents, Vector<ServiceComponent*> serviceComponents, Vector<PositionFollowingComponent*> positionFollowingComponents);
 };

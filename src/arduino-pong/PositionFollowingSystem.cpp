@@ -1,5 +1,7 @@
 #include "PositionFollowingSystem.h"
 
+#include <Arduino.h>
+
 int PositionFollowingSystem::calculatePositionY(Entity *entity)
 {
     const Entity* trackedEntity = entity->positionFollowingComponent.trackedEntity;
@@ -21,5 +23,13 @@ int PositionFollowingSystem::calculatePositionY(Entity *entity)
 
 void PositionFollowingSystem::update(Entity *entity)
 {
+    if (!entity->positionFollowingComponent.isFollowing) {
+        return;
+    }
+
+    if (entity->bouncingBoxComponent.hitsCount > 7) {
+        entity->positionFollowingComponent.isFollowing = false;
+    }
+
     entity->positionComponent.position.y = calculatePositionY(entity);
 }

@@ -13,6 +13,7 @@
 #include "HorizontalBorderSprite.h"
 #include "ServiceComponent.h"
 #include "GoalComponent.h"
+#include "PositionControlComponent.h"
 
 using XC::Hardware::Appliance;
 
@@ -31,8 +32,8 @@ class PongECSFactory
         RenderComponent renderComponentsStorage[3];
         Vector<RenderComponent> renderComponents;
 
-        BouncingBoxComponent bouncingBoxComponentsStorage[5];
-        Vector<BouncingBoxComponent> bouncingBoxComponents;
+        BouncingBoxComponent* bouncingBoxComponentsStorage[5];
+        Vector<BouncingBoxComponent*> bouncingBoxComponents;
 
         ServiceComponent* serviceComponentsStorage[2];
         Vector<ServiceComponent*> serviceComponents;
@@ -42,6 +43,9 @@ class PongECSFactory
 
         PositionControlComponent* positionControlComponentsStorage[2];
         Vector<PositionControlComponent*> positionControlComponents;
+
+        PositionFollowingComponent* positionFollowingComponentsStorage[1];
+        Vector<PositionFollowingComponent*> positionFollowingComponents;
 
         Entity ball;
         Entity rightPaddle;
@@ -68,16 +72,18 @@ class PongECSFactory
         void populateServiceComponentsPool();
         void populateGoalComponentsPool();
         void populatePositionControlComponentsPool();
+        void populatePositionFollowingComponentsPool();
 
     public:
         begin(Appliance *appliance);
         Vector<Entity> getEntities();
 
         Vector<RenderComponent> getRenderComponents();
-        Vector<BouncingBoxComponent> getBouncingBoxComponents();
+        Vector<BouncingBoxComponent*> getBouncingBoxComponents();
         Vector<ServiceComponent*> getServiceComponents();
         Vector<GoalComponent*> getGoalComponents();
         Vector<PositionControlComponent*> getPositionControlComponents();
+        Vector<PositionFollowingComponent*> getPositionFollowingComponents();
         
         Entity *getBallEntity();
         Entity *getRightPaddleEntity();
