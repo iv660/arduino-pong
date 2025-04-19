@@ -53,6 +53,22 @@ class PongECSFactory
         Entity leftPlayerGoal;
         Entity rightPlayerGoal;
 
+        void initializeComponentPools();
+        void initializeEntitiesPool();
+        void initializeSprites();
+
+        void initializeBallEntity();
+        void initializeBordersEntities();
+        void initializePaddlesEntities();
+        void initializeServiceEntities();
+        void initializeGoalEntities();
+
+        void populateEntitiesPool();
+        void populateBouncingBoxComponentsPool();
+        void populateServiceComponentsPool();
+        void populateGoalComponentsPool();
+        void populatePositionControlComponentsPool();
+
     public:
         begin(Appliance *appliance);
         Vector<Entity> getEntities();
