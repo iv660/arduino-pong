@@ -87,7 +87,7 @@ void setup()
 void loop() 
 {
     playerControlSystem.update(rightPaddle);
-    // aiControlSystem.update(leftPaddle);
+    aiControlSystem.update(leftPaddle);
     goalDetectionSystem.handle(ball, goalComponents);
     serviceSystem.handle(serviceComponents, ball);
     movementSystem.update(ball);
