@@ -242,3 +242,8 @@ Entity * PongECSFactory::getLeftPlayerServiceEntity()
 {
     return &leftPlayerService;
 }
+
+Entity *PongECSFactory::getScoreEntity()
+{
+    return &score;
+}

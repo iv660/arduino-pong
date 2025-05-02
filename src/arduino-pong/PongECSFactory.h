@@ -95,5 +95,6 @@ class PongECSFactory
         Entity *getTopBorderEntity();
         Entity *getBottomBorderEntity();
         Entity *getLeftPlayerServiceEntity();
+        Entity *getScoreEntity();
 };
 

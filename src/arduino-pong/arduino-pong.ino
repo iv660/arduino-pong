@@ -46,10 +46,12 @@ Entity *ball;
 Entity *topBorder;
 Entity *bottomBorder;
 Entity *leftPlayerService;
+Entity *score;
 
 BallSprite ballSprite;
 PaddleSprite paddleSprite;
 HorizontalBorderSprite horizontalBorderSprite;
+ScoreSprite scoreSprite;
 
 Vector<RenderComponent> renderComponents;
 Vector<BouncingBoxComponent*> bouncingBoxComponents;
@@ -83,6 +85,7 @@ void setup()
     topBorder = ecsFactory.getTopBorderEntity();
     bottomBorder = ecsFactory.getBottomBorderEntity();
     leftPlayerService = ecsFactory.getLeftPlayerServiceEntity();
+    score = ecsFactory.getScoreEntity();
 
     leftPlayerService->serviceComponent.isRequested = true;
 }
@@ -97,6 +100,7 @@ void loop()
     movementSystem.update(ball);
     collisionSystem.update(bouncingBoxComponents);
 
+    renderSystem.redraw(score);
     renderSystem.redraw(ball);
     renderSystem.redraw(rightPaddle);
     renderSystem.redraw(leftPaddle);
