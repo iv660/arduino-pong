@@ -14,7 +14,8 @@ void PongECSFactory::initializeSprites()
 
 void PongECSFactory::initializeScoreEntity() 
 {
-    score.positionComponent.position = {appliance->screen->width() / 2 - 20, 10};
+    score.renderComponent.sprite = &scoreSprite;
+    score.positionComponent.position = {appliance->screen->width() / 2 - scoreSprite.getWidth() / 2, 10};
 }
 
 void PongECSFactory::initializeBallEntity()

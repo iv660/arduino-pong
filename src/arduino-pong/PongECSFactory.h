@@ -6,6 +6,7 @@
 #include <Arduino.h>
 
 #include "BallSprite.h"
+#include "ScoreSprite.h"
 #include "RenderComponent.h"
 #include "Entity.h"
 #include "PaddleSprite.h"
@@ -25,6 +26,7 @@ class PongECSFactory
         BallSprite ballSprite;
         PaddleSprite paddleSprite;
         HorizontalBorderSprite horizontalBorderSprite;
+        ScoreSprite scoreSprite;
 
         Entity entitiesStorage[10];
         Vector<Entity> entities;

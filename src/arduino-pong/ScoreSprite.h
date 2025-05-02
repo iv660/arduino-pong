@@ -11,7 +11,7 @@ class ScoreSprite: public SpriteInterface
         int const width = 40;
         int const height = 12;
     public:
-        void drawOn(ScreenInterface* screen, Position position): override;
+        void drawOn(ScreenInterface* screen, Position position) override;
         void eraseFrom(ScreenInterface* screen, Position position) override;
 
         int getWidth() override;

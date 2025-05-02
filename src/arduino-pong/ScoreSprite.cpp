@@ -1,9 +1,9 @@
-#include "ScoreSprite.cpp"
+#include "ScoreSprite.h"
 
 void ScoreSprite::drawOn(ScreenInterface* screen, Position position)
 {
-    screen->stroke(255, 255, 255);
-    screen->fill(255, 255, 255);
+    screen->stroke(100, 100, 100);
+    screen->fill(100, 100, 100);
     screen->rect(position.x, position.y, width, height);
 }
 
