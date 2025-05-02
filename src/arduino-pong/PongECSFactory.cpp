@@ -175,6 +175,7 @@ PongECSFactory::begin(Appliance *appliance)
     initializePaddlesEntities();
     initializeServiceEntities();
     initializeGoalEntities();
+    initializeScoreEntity();
 
     populateEntitiesPool();
     populateBouncingBoxComponentsPool();
