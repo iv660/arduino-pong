@@ -26,7 +26,7 @@ class PongECSFactory
         PaddleSprite paddleSprite;
         HorizontalBorderSprite horizontalBorderSprite;
 
-        Entity entitiesStorage[6];
+        Entity entitiesStorage[10];
         Vector<Entity> entities;
 
         RenderComponent renderComponentsStorage[3];
@@ -56,6 +56,7 @@ class PongECSFactory
         Entity rightPlayerService;
         Entity leftPlayerGoal;
         Entity rightPlayerGoal;
+        Entity score;
 
         void initializeComponentPools();
         void initializeEntitiesPool();
@@ -66,6 +67,7 @@ class PongECSFactory
         void initializePaddlesEntities();
         void initializeServiceEntities();
         void initializeGoalEntities();
+        void initializeScoreEntity();
 
         void populateEntitiesPool();
         void populateBouncingBoxComponentsPool();

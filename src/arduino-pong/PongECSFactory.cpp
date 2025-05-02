@@ -12,6 +12,11 @@ void PongECSFactory::initializeSprites()
     horizontalBorderSprite.setScreen(appliance->screen);
 }
 
+void PongECSFactory::initializeScoreEntity() 
+{
+    score.positionComponent.position = {appliance->screen->width() / 2 - 20, 10};
+}
+
 void PongECSFactory::initializeBallEntity()
 {
     ball.renderComponent.sprite = &ballSprite;
@@ -109,6 +114,10 @@ void PongECSFactory::populateEntitiesPool()
     entities.push_back(topBorder);
     entities.push_back(bottomBorder);
     entities.push_back(leftPlayerService);
+    entities.push_back(rightPlayerService);
+    entities.push_back(leftPlayerGoal);
+    entities.push_back(rightPlayerGoal);
+    entities.push_back(score);
 }
 
 void PongECSFactory::populateBouncingBoxComponentsPool()
