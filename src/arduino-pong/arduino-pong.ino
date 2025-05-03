@@ -26,38 +26,18 @@
 using XC::Hardware::Appliance;
 using XC::SlimPad::ApplianceFactory;
 
-ApplianceFactory applianceFactory;
-Appliance appliance;
+static ApplianceFactory applianceFactory;
+static Appliance appliance;
 
-Entity entitiesStorage[3];
-Vector<Entity> entities = Vector<Entity>(entitiesStorage);
+static RenderSystem renderSystem(&appliance);
+static MovementSystem movementSystem;
+static CollisionSystem collisionSystem;
+static ServiceSystem serviceSystem;
+static GoalDetectionSystem goalDetectionSystem;
+static ManualPositionControlSystem playerControlSystem(&appliance);
+static PositionFollowingSystem aiControlSystem;
 
-RenderSystem renderSystem(&appliance);
-MovementSystem movementSystem;
-CollisionSystem collisionSystem;
-ServiceSystem serviceSystem;
-GoalDetectionSystem goalDetectionSystem;
-ManualPositionControlSystem playerControlSystem(&appliance);
-PositionFollowingSystem aiControlSystem;
-
-Entity *leftPaddle;
-Entity *rightPaddle;
-Entity *ball;
-Entity *leftPlayerService;
-
-BallSprite ballSprite;
-PaddleSprite paddleSprite;
-HorizontalBorderSprite horizontalBorderSprite;
-ScoreSprite scoreSprite;
-
-Vector<RenderComponent*> renderComponents;
-Vector<BouncingBoxComponent*> bouncingBoxComponents;
-Vector<ServiceComponent*> serviceComponents;
-Vector<GoalComponent*> goalComponents;
-Vector<PositionControlComponent*> positionControlComponents;
-Vector<PositionFollowingComponent*> positionFollowingComponents;
-
-PongECSFactory ecsFactory;
+static PongECSFactory ecsFactory;
 
 void setup() 
 {
@@ -68,31 +48,30 @@ void setup()
     
     renderSystem.begin();
 
-    entities = ecsFactory.getEntities();
-    renderComponents = ecsFactory.getRenderComponents();
-    bouncingBoxComponents = ecsFactory.getBouncingBoxComponents();
-    serviceComponents = ecsFactory.getServiceComponents();
-    goalComponents = ecsFactory.getGoalComponents();
-    positionControlComponents = ecsFactory.getPositionControlComponents();
-    positionFollowingComponents = ecsFactory.getPositionFollowingComponents();
-
-    ball = ecsFactory.getBallEntity();
-    rightPaddle = ecsFactory.getRightPaddleEntity();
-    leftPaddle = ecsFactory.getLeftPaddleEntity();
-    leftPlayerService = ecsFactory.getLeftPlayerServiceEntity();
-
-    leftPlayerService->serviceComponent.isRequested = true;
+    ecsFactory.getLeftPlayerServiceEntity()
+        ->serviceComponent.isRequested = true;
 }
 
 void loop() 
 {
-    playerControlSystem.update(rightPaddle);
-    aiControlSystem.update(leftPaddle);
-    goalDetectionSystem.handle(ball, goalComponents);
-    collisionSystem.afterServiceRequest(bouncingBoxComponents, serviceComponents, positionFollowingComponents);
-    serviceSystem.handle(serviceComponents, ball);
-    movementSystem.update(ball);
-    collisionSystem.update(bouncingBoxComponents);
-
-    renderSystem.redraw(renderComponents);
+    playerControlSystem.update(
+        ecsFactory.getRightPaddleEntity());
+    aiControlSystem.update(
+        ecsFactory.getLeftPaddleEntity());
+    goalDetectionSystem.handle(
+        ecsFactory.getBallEntity(), 
+        ecsFactory.getGoalComponents());
+    collisionSystem.afterServiceRequest(
+        ecsFactory.getBouncingBoxComponents(), 
+        ecsFactory.getServiceComponents(), 
+        ecsFactory.getPositionFollowingComponents());
+    serviceSystem.handle(
+        ecsFactory.getServiceComponents(), 
+        ecsFactory.getBallEntity());
+    movementSystem.update(
+        ecsFactory.getBallEntity());
+    collisionSystem.update(
+        ecsFactory.getBouncingBoxComponents());
+    renderSystem.redraw(
+        ecsFactory.getRenderComponents());
 }

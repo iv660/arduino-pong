@@ -138,6 +138,16 @@ void PongECSFactory::populateEntitiesPool()
     entities.push_back(score);
 }
 
+void PongECSFactory::populateRenderComponentsPool()
+{
+    renderComponents.push_back(&score.renderComponent);
+    renderComponents.push_back(&ball.renderComponent);
+    renderComponents.push_back(&topBorder.renderComponent);
+    renderComponents.push_back(&bottomBorder.renderComponent);
+    renderComponents.push_back(&leftPaddle.renderComponent);
+    renderComponents.push_back(&rightPaddle.renderComponent);
+}
+
 void PongECSFactory::populateBouncingBoxComponentsPool()
 {
     bouncingBoxComponents.push_back(&ball.bouncingBoxComponent);
@@ -196,6 +206,7 @@ PongECSFactory::begin(Appliance *appliance)
     initializeScoreEntity();
 
     populateEntitiesPool();
+    populateRenderComponentsPool();
     populateBouncingBoxComponentsPool();
     populateServiceComponentsPool();
     populateGoalComponentsPool();

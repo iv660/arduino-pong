@@ -31,7 +31,7 @@ class PongECSFactory
         Entity entitiesStorage[10];
         Vector<Entity> entities;
 
-        RenderComponent* renderComponentsStorage[3];
+        RenderComponent* renderComponentsStorage[7];
         Vector<RenderComponent*> renderComponents;
 
         BouncingBoxComponent* bouncingBoxComponentsStorage[5];
@@ -72,6 +72,7 @@ class PongECSFactory
         void initializeScoreEntity();
 
         void populateEntitiesPool();
+        void populateRenderComponentsPool();
         void populateBouncingBoxComponentsPool();
         void populateServiceComponentsPool();
         void populateGoalComponentsPool();
