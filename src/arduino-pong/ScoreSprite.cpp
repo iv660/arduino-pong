@@ -2,8 +2,8 @@
 
 void ScoreSprite::drawOn(ScreenInterface* screen, Position position)
 {
-    screen->stroke(100, 100, 100);
-    screen->fill(100, 100, 100);
+    screen->stroke(200, 200, 200);
+    screen->fill(200, 200, 200);
     screen->rect(position.x, position.y, width, height);
 }
 
