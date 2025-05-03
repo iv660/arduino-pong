@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Appliance.h>
+#include <Vector.h>
 
 #include "RenderComponent.h"
 #include "Entity.h"
@@ -17,4 +18,5 @@ class RenderSystem
 
         void begin();
         void redraw(Entity* entity);
+        void redraw(Vector<RenderComponent*> components);
 };

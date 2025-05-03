@@ -31,8 +31,8 @@ class PongECSFactory
         Entity entitiesStorage[10];
         Vector<Entity> entities;
 
-        RenderComponent renderComponentsStorage[3];
-        Vector<RenderComponent> renderComponents;
+        RenderComponent* renderComponentsStorage[3];
+        Vector<RenderComponent*> renderComponents;
 
         BouncingBoxComponent* bouncingBoxComponentsStorage[5];
         Vector<BouncingBoxComponent*> bouncingBoxComponents;
@@ -82,7 +82,7 @@ class PongECSFactory
         begin(Appliance *appliance);
         Vector<Entity> getEntities();
 
-        Vector<RenderComponent> getRenderComponents();
+        Vector<RenderComponent*> getRenderComponents();
         Vector<BouncingBoxComponent*> getBouncingBoxComponents();
         Vector<ServiceComponent*> getServiceComponents();
         Vector<GoalComponent*> getGoalComponents();

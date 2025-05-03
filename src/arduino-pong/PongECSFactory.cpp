@@ -15,46 +15,61 @@ void PongECSFactory::initializeSprites()
 void PongECSFactory::initializeScoreEntity() 
 {
     score.renderComponent.sprite = &scoreSprite;
+
     score.positionComponent.position = {appliance->screen->width() / 2 - scoreSprite.getWidth() / 2, 10};
+
+    score.renderComponent.entity = &score;
 }
 
 void PongECSFactory::initializeBallEntity()
 {
     ball.renderComponent.sprite = &ballSprite;
+
     ball.positionComponent.position = {45, 60};
     ball.movementComponent.xMovement.velocity = 0;
     ball.movementComponent.yMovement.velocity = 0;
     ball.bouncingBoxComponent.width = ballSprite.getWidth();
     ball.bouncingBoxComponent.height = ballSprite.getHeight();
+
     ball.bouncingBoxComponent.entity = &ball;
+    ball.renderComponent.entity = &ball;
 }
 
 void PongECSFactory::initializeBordersEntities()
 {
     topBorder.renderComponent.sprite = &horizontalBorderSprite;
+
     topBorder.positionComponent.position = {0, 0};
     topBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
     topBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
+
     topBorder.bouncingBoxComponent.entity = &topBorder;
+    topBorder.renderComponent.entity = &topBorder;
 
     bottomBorder.renderComponent.sprite = &horizontalBorderSprite;
+
     bottomBorder.positionComponent.position = {0, appliance->screen->height() - horizontalBorderSprite.getHeight()};
     bottomBorder.bouncingBoxComponent.width = horizontalBorderSprite.getWidth();
     bottomBorder.bouncingBoxComponent.height = horizontalBorderSprite.getHeight();
+
     bottomBorder.bouncingBoxComponent.entity = &bottomBorder;
+    bottomBorder.renderComponent.entity = &bottomBorder;
 }
 
 void PongECSFactory::initializePaddlesEntities()
 {
     leftPaddle.renderComponent.sprite = &paddleSprite;
+
     leftPaddle.positionComponent.position = {0, horizontalBorderSprite.getHeight() + 1};
     leftPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
     leftPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
-
+    
     rightPaddle.renderComponent.sprite = &paddleSprite;
+    
     rightPaddle.positionComponent.position = {156, 3};
     rightPaddle.bouncingBoxComponent.width = paddleSprite.getWidth();
     rightPaddle.bouncingBoxComponent.height = paddleSprite.getHeight();
+    
     
     // This code requires the components' sprite to be initialized first
     // Don't move the code above the initialization of paddles components
@@ -66,15 +81,17 @@ void PongECSFactory::initializePaddlesEntities()
         topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
         appliance->screen->height() - rightPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
-
+    
     leftPaddle.positionFollowingComponent.entity = &leftPaddle;
     leftPaddle.positionFollowingComponent.trackedEntity = &ball;
     leftPaddle.positionFollowingComponent.isFollowing = true;
-
+    
     leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
     leftPaddle.positionControlComponent.entity = &leftPaddle;
     rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
     rightPaddle.positionControlComponent.entity = &rightPaddle;
+    rightPaddle.renderComponent.entity = &rightPaddle;
+    leftPaddle.renderComponent.entity = &leftPaddle;
 }
 
 void PongECSFactory::initializeServiceEntities()
@@ -155,7 +172,7 @@ void PongECSFactory::populatePositionFollowingComponentsPool()
 
 void PongECSFactory::initializeComponentPools()
 {
-    renderComponents = Vector<RenderComponent>(renderComponentsStorage);
+    renderComponents = Vector<RenderComponent*>(renderComponentsStorage);
     bouncingBoxComponents = Vector<BouncingBoxComponent*>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
@@ -190,7 +207,7 @@ Vector<Entity> PongECSFactory::getEntities() {
     return entities;
 }
 
-Vector<RenderComponent> PongECSFactory::getRenderComponents() {
+Vector<RenderComponent*> PongECSFactory::getRenderComponents() {
     return renderComponents;
 }
 

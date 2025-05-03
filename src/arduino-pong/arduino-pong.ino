@@ -43,17 +43,14 @@ PositionFollowingSystem aiControlSystem;
 Entity *leftPaddle;
 Entity *rightPaddle;
 Entity *ball;
-Entity *topBorder;
-Entity *bottomBorder;
 Entity *leftPlayerService;
-Entity *score;
 
 BallSprite ballSprite;
 PaddleSprite paddleSprite;
 HorizontalBorderSprite horizontalBorderSprite;
 ScoreSprite scoreSprite;
 
-Vector<RenderComponent> renderComponents;
+Vector<RenderComponent*> renderComponents;
 Vector<BouncingBoxComponent*> bouncingBoxComponents;
 Vector<ServiceComponent*> serviceComponents;
 Vector<GoalComponent*> goalComponents;
@@ -82,10 +79,7 @@ void setup()
     ball = ecsFactory.getBallEntity();
     rightPaddle = ecsFactory.getRightPaddleEntity();
     leftPaddle = ecsFactory.getLeftPaddleEntity();
-    topBorder = ecsFactory.getTopBorderEntity();
-    bottomBorder = ecsFactory.getBottomBorderEntity();
     leftPlayerService = ecsFactory.getLeftPlayerServiceEntity();
-    score = ecsFactory.getScoreEntity();
 
     leftPlayerService->serviceComponent.isRequested = true;
 }
@@ -100,10 +94,5 @@ void loop()
     movementSystem.update(ball);
     collisionSystem.update(bouncingBoxComponents);
 
-    renderSystem.redraw(score);
-    renderSystem.redraw(ball);
-    renderSystem.redraw(rightPaddle);
-    renderSystem.redraw(leftPaddle);
-    renderSystem.redraw(topBorder);
-    renderSystem.redraw(bottomBorder);
+    renderSystem.redraw(renderComponents);
 }

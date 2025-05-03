@@ -13,6 +13,17 @@ void RenderSystem::begin()
     appliance->screen->background(0, 0, 0);
 }
 
+void RenderSystem::redraw(Vector<RenderComponent*> components)
+{
+    for (auto component: components) {
+        if (component->entity == nullptr) {
+            continue;
+        }
+        
+        redraw(component->entity);
+    }
+}
+
 void RenderSystem::redraw(Entity* entity)
 {
     if (!hasMoved(entity)) {
