@@ -15,6 +15,7 @@ void PongECSFactory::initializeSprites()
 void PongECSFactory::initializeScoreEntity() 
 {
     score.renderComponent.sprite = &scoreSprite;
+    score.renderComponent.isBackground = true;
 
     score.positionComponent.position = {appliance->screen->width() / 2 - scoreSprite.getWidth() / 2, 10};
 

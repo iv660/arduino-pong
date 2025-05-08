@@ -13,10 +13,14 @@ class RenderSystem
     private:
         Appliance* appliance;
         inline bool hasMoved(Entity* entity);
+
+        void redraw(Entity* entity, Vector<RenderComponent*> components);
+
+        void redrawBackgroundComponents(Vector<RenderComponent*> components, RenderComponent* erasedCompnent);
+        bool overlaps(RenderComponent* component1, RenderComponent* component2);
     public:
         RenderSystem(Appliance* appliance) : appliance(appliance) {};
 
         void begin();
-        void redraw(Entity* entity);
         void redraw(Vector<RenderComponent*> components);
 };

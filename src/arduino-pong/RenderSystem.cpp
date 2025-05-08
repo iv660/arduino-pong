@@ -20,11 +20,11 @@ void RenderSystem::redraw(Vector<RenderComponent*> components)
             continue;
         }
         
-        redraw(component->entity);
+        redraw(component->entity, components);
     }
 }
 
-void RenderSystem::redraw(Entity* entity)
+void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> components)
 {
     if (!hasMoved(entity)) {
         return;
@@ -36,6 +36,7 @@ void RenderSystem::redraw(Entity* entity)
     ) {
         entity->renderComponent.sprite
             ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
+        redrawBackgroundComponents(components, &entity->renderComponent);
     }
     
     entity->renderComponent.sprite
@@ -43,3 +44,35 @@ void RenderSystem::redraw(Entity* entity)
     entity->renderComponent.previousPosition = 
         entity->positionComponent.position;
 }
+void RenderSystem::redrawBackgroundComponents(Vector<RenderComponent *> components, RenderComponent* erasedComponent)
+{
+    for (auto component: components) {
+        if (!component->isBackground) {
+            continue;
+        }
+
+        if (!overlaps(component, erasedComponent)) {
+            continue;
+        }
+
+        component->sprite->drawOn(
+            appliance->screen, 
+            component->entity->positionComponent.position);
+    }
+}
+
+bool RenderSystem::overlaps(RenderComponent *component1, RenderComponent *component2)
+{
+    int component1Left = component1->entity->positionComponent.position.x;
+    int component1Right = component1Left + component1->sprite->getWidth();
+    int component1Top = component1->entity->positionComponent.position.y;
+    int component1Bottom = component1Top + component1->sprite->getHeight();
+
+    int component2Left = component2->entity->positionComponent.position.x;
+    int component2Right = component2Left + component2->sprite->getWidth();
+    int component2Top = component2->entity->positionComponent.position.y;
+    int component2Bottom = component2Top + component2->sprite->getHeight();
+
+    return !(component1Left > component2Right || component1Right < component2Left || component1Top > component2Bottom || component1Bottom < component2Top);
+}
+
