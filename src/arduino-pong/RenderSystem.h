@@ -14,7 +14,7 @@ class RenderSystem
         Appliance* appliance;
         inline bool hasMoved(Entity* entity);
 
-        void redraw(Entity* entity, Vector<RenderComponent*> components);
+        void redraw(Entity* entity, Vector<RenderComponent*> otherComponents);
 
         void redrawBackgroundComponents(Vector<RenderComponent*> components, RenderComponent* erasedCompnent);
         bool overlaps(RenderComponent* component1, RenderComponent* component2);

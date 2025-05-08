@@ -24,7 +24,7 @@ void RenderSystem::redraw(Vector<RenderComponent*> components)
     }
 }
 
-void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> components)
+void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> otherComponents)
 {
     if (!hasMoved(entity)) {
         return;
@@ -36,7 +36,7 @@ void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> components)
     ) {
         entity->renderComponent.sprite
             ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
-        redrawBackgroundComponents(components, &entity->renderComponent);
+        redrawBackgroundComponents(otherComponents, &entity->renderComponent);
     }
     
     entity->renderComponent.sprite
