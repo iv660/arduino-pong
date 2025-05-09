@@ -27,10 +27,8 @@ void PositionFollowingSystem::update(Entity *entity)
         return;
     }
 
-    // if (entity->bouncingBoxComponent.hitsCount >= entity->positionFollowingComponent->hitsCountBeforeFailure) {
-    if (entity->bouncingBoxComponent.hitsCount >= 7) {
-        // entity->positionFollowingComponent->hitsCountBeforeFailure = 
-            // entity->bouncingBoxComponent.hitsCount + random(1, 3);
+    if (entity->bouncingBoxComponent.hitsCount >= entity->positionFollowingComponent->hitsCountBeforeFailure) {
+        
         entity->positionFollowingComponent->isFollowing = false;
     }
 

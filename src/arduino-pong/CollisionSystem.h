@@ -28,6 +28,7 @@ class CollisionSystem
         bool serviceIsRequestedForAnyOf(Vector<ServiceComponent*> serviceComponents);
 
         void resetHitsCounters(Vector<BouncingBoxComponent*> bouncingBoxComponents);
+        void adjustPositionFollowingSkill(Vector<PositionFollowingComponent*> positionFollowingComponents);
         void unfreezePositionFollowing(Vector<PositionFollowingComponent*> positionFollowingComponents);
     public:
         void update(Vector<BouncingBoxComponent*> bouncingBoxComponents);

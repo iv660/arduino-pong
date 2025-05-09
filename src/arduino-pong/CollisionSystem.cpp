@@ -123,6 +123,14 @@ void CollisionSystem::resetHitsCounters(Vector<BouncingBoxComponent*> bouncingBo
     }
 }
 
+void CollisionSystem::adjustPositionFollowingSkill(Vector<PositionFollowingComponent *> positionFollowingComponents)
+{
+    for (auto positionFollowingComponent: positionFollowingComponents) {
+        positionFollowingComponent->hitsCountBeforeFailure = 
+            positionFollowingComponent->entity->bouncingBoxComponent.hitsCount + random(-1, 3);
+    }
+}
+
 void CollisionSystem::unfreezePositionFollowing(Vector<PositionFollowingComponent*> positionFollowingComponents)
 {
     for (auto positionFollowingComponent: positionFollowingComponents) {
@@ -163,6 +171,7 @@ void CollisionSystem::update(Vector<BouncingBoxComponent*> bouncingBoxComponents
 void CollisionSystem::afterServiceRequest(Vector<BouncingBoxComponent*> bouncingBoxComponents, Vector<ServiceComponent*> serviceComponents, Vector<PositionFollowingComponent*> positionFollowingComponents)
 {
     if (serviceIsRequestedForAnyOf(serviceComponents)) {
+        adjustPositionFollowingSkill(positionFollowingComponents);
         resetHitsCounters(bouncingBoxComponents);
         unfreezePositionFollowing(positionFollowingComponents);
     }
