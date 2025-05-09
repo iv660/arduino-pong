@@ -4,6 +4,7 @@
 
 #include "Position.h"
 #include "SpriteInterface.h"
+#include "CounterComponent.h"
 
 class ScoreSprite: public SpriteInterface
 {
@@ -13,7 +14,11 @@ class ScoreSprite: public SpriteInterface
         int const fontSize = 1;
 
         char* getScoreString();
+        
     public:
+        CounterComponent* leftCounterComponent;
+        CounterComponent* rightCounterComponent;
+
         void drawOn(ScreenInterface* screen, Position position) override;
         void eraseFrom(ScreenInterface* screen, Position position) override;
 

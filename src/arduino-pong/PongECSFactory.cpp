@@ -14,10 +14,16 @@ void PongECSFactory::initializeSprites()
 
 void PongECSFactory::initializeScoreEntity() 
 {
+    scoreSprite.leftCounterComponent = &rightPlayerGoal.counterComponent;
+    scoreSprite.rightCounterComponent = &leftPlayerGoal.counterComponent;
+
     score.renderComponent.sprite = &scoreSprite;
     score.renderComponent.isBackground = true;
 
-    score.positionComponent.position = {appliance->screen->width() / 2 - scoreSprite.getWidth() / 2, 10};
+    score.positionComponent.position = {
+        appliance->screen->width() / 2 - scoreSprite.getWidth() / 2, 
+        10
+    };
 
     score.renderComponent.entity = &score;
 }
@@ -117,11 +123,13 @@ void PongECSFactory::initializeGoalEntities()
     leftPlayerGoal.positionComponent.position = {0, 0};
     leftPlayerGoal.goalComponent.height = appliance->screen->height();
     leftPlayerGoal.goalComponent.service = &leftPlayerService;
+    leftPlayerGoal.goalComponent.score = &score;
     leftPlayerGoal.goalComponent.entity = &leftPlayerGoal;
 
     rightPlayerGoal.positionComponent.position = {appliance->screen->width(), 0};
     rightPlayerGoal.goalComponent.height = appliance->screen->height();
     rightPlayerGoal.goalComponent.service = &rightPlayerService;
+    rightPlayerGoal.goalComponent.score = &score;
     rightPlayerGoal.goalComponent.entity = &rightPlayerGoal;
 }
 

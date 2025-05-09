@@ -26,13 +26,16 @@ void RenderSystem::redraw(Vector<RenderComponent*> components)
 
 void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> otherComponents)
 {
-    if (!hasMoved(entity)) {
+    if (!hasMoved(entity) && !entity->renderComponent.redrawIsRequested) {
         return;
     }
 
     if (
-        entity->renderComponent.previousPosition.x != -1 
-        && entity->renderComponent.previousPosition.y != -1
+        (
+            entity->renderComponent.previousPosition.x != -1 
+            && entity->renderComponent.previousPosition.y != -1
+        )
+        || entity->renderComponent.redrawIsRequested
     ) {
         entity->renderComponent.sprite
             ->eraseFrom(appliance->screen, entity->renderComponent.previousPosition);
@@ -43,11 +46,16 @@ void RenderSystem::redraw(Entity* entity, Vector<RenderComponent*> otherComponen
         ->drawOn(appliance->screen, entity->positionComponent.position);
     entity->renderComponent.previousPosition = 
         entity->positionComponent.position;
+    entity->renderComponent.redrawIsRequested = false;
 }
 void RenderSystem::redrawBackgroundComponents(Vector<RenderComponent *> components, RenderComponent* erasedComponent)
 {
     for (auto component: components) {
         if (!component->isBackground) {
+            continue;
+        }
+
+        if (component == erasedComponent) {
             continue;
         }
 

@@ -17,6 +17,8 @@ void GoalDetectionSystem::handle(Entity *ball, Vector<GoalComponent *> goalCompo
 {
     for (auto goalComponent: goalComponents) {
         if (hits(ball, goalComponent)) {
+            goalComponent->entity->counterComponent.value++;
+            goalComponent->score->renderComponent.redrawIsRequested = true;
             goalComponent->service->serviceComponent.isRequested = true;
         }
     }

@@ -8,6 +8,7 @@
 #include "GoalComponent.h"
 #include "PositionControlComponent.h"
 #include "PositionFollowingComponent.h"
+#include "CounterComponent.h"
 
 struct Entity {
     PositionComponent positionComponent;
@@ -18,4 +19,5 @@ struct Entity {
     GoalComponent goalComponent;
     PositionControlComponent positionControlComponent;
     PositionFollowingComponent positionFollowingComponent;
+    CounterComponent counterComponent;
 };

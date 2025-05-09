@@ -11,4 +11,5 @@ struct RenderComponent
     Position previousPosition = {-1, -1};
     Entity* entity;
     bool isBackground = false;
+    bool redrawIsRequested = false;
 };

@@ -5,5 +5,6 @@
 struct GoalComponent {
     Entity* entity;
     Entity* service;
+    Entity* score;
     int height = 0;
 };
