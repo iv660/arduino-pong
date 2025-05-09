@@ -89,9 +89,11 @@ void PongECSFactory::initializePaddlesEntities()
         appliance->screen->height() - rightPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
     
-    leftPaddle.positionFollowingComponent.entity = &leftPaddle;
-    leftPaddle.positionFollowingComponent.trackedEntity = &ball;
-    leftPaddle.positionFollowingComponent.isFollowing = true;
+    positionFollowingComponentsRegistry.push_back(PositionFollowingComponent());
+    leftPaddle.positionFollowingComponent = &positionFollowingComponentsRegistry.back();
+    leftPaddle.positionFollowingComponent->entity = &leftPaddle;
+    leftPaddle.positionFollowingComponent->trackedEntity = &ball;
+    leftPaddle.positionFollowingComponent->isFollowing = true;
     
     leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
     leftPaddle.positionControlComponent.entity = &leftPaddle;
@@ -186,7 +188,7 @@ void PongECSFactory::populatePositionControlComponentsPool()
 
 void PongECSFactory::populatePositionFollowingComponentsPool()
 {
-    positionFollowingComponents.push_back(&leftPaddle.positionFollowingComponent);
+    positionFollowingComponents.push_back(leftPaddle.positionFollowingComponent);
 }
 
 void PongECSFactory::initializeComponentPools()
@@ -196,6 +198,7 @@ void PongECSFactory::initializeComponentPools()
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
     positionControlComponents = Vector<PositionControlComponent*>(positionControlComponentsStorage);
+    positionFollowingComponentsRegistry = Vector<PositionFollowingComponent>(positionFollowingComponentsRegistryRegistryStorage);
     positionFollowingComponents = Vector<PositionFollowingComponent*>(positionFollowingComponentsStorage);
 }
 

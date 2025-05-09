@@ -8,5 +8,6 @@ struct PositionFollowingComponent
     Entity* trackedEntity;
 
     bool isFollowing = true;
+    // int hitsCountBeforeFailure = 7;
 };
 

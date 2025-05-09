@@ -4,7 +4,7 @@
 
 int PositionFollowingSystem::calculatePositionY(Entity *entity)
 {
-    const Entity* trackedEntity = entity->positionFollowingComponent.trackedEntity;
+    const Entity* trackedEntity = entity->positionFollowingComponent->trackedEntity;
 
     int trackedEntityPositionY = trackedEntity->positionComponent.position.y;
     int trackedEntityCenterPositionY = trackedEntityPositionY + (trackedEntity->renderComponent.sprite->getHeight() / 2);
@@ -23,12 +23,15 @@ int PositionFollowingSystem::calculatePositionY(Entity *entity)
 
 void PositionFollowingSystem::update(Entity *entity)
 {
-    if (!entity->positionFollowingComponent.isFollowing) {
+    if (!entity->positionFollowingComponent->isFollowing) {
         return;
     }
 
-    if (entity->bouncingBoxComponent.hitsCount > 7) {
-        entity->positionFollowingComponent.isFollowing = false;
+    // if (entity->bouncingBoxComponent.hitsCount >= entity->positionFollowingComponent->hitsCountBeforeFailure) {
+    if (entity->bouncingBoxComponent.hitsCount >= 7) {
+        // entity->positionFollowingComponent->hitsCountBeforeFailure = 
+            // entity->bouncingBoxComponent.hitsCount + random(1, 3);
+        entity->positionFollowingComponent->isFollowing = false;
     }
 
     entity->positionComponent.position.y = calculatePositionY(entity);

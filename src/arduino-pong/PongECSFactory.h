@@ -46,6 +46,8 @@ class PongECSFactory
         PositionControlComponent* positionControlComponentsStorage[2];
         Vector<PositionControlComponent*> positionControlComponents;
 
+        PositionFollowingComponent positionFollowingComponentsRegistryRegistryStorage[1];
+        Vector<PositionFollowingComponent> positionFollowingComponentsRegistry;
         PositionFollowingComponent* positionFollowingComponentsStorage[1];
         Vector<PositionFollowingComponent*> positionFollowingComponents;
 

@@ -18,6 +18,6 @@ struct Entity {
     ServiceComponent serviceComponent;
     GoalComponent goalComponent;
     PositionControlComponent positionControlComponent;
-    PositionFollowingComponent positionFollowingComponent;
+    PositionFollowingComponent* positionFollowingComponent = nullptr;
     CounterComponent counterComponent;
 };
