@@ -37,6 +37,8 @@ class PongECSFactory
         BouncingBoxComponent* bouncingBoxComponentsStorage[5];
         Vector<BouncingBoxComponent*> bouncingBoxComponents;
 
+        ServiceComponent serviceComponentsRegistryStorage[2];
+        Vector<ServiceComponent> serviceComponentsRegistry;
         ServiceComponent* serviceComponentsStorage[2];
         Vector<ServiceComponent*> serviceComponents;
 

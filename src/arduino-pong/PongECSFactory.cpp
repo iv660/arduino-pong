@@ -110,19 +110,23 @@ void PongECSFactory::initializePaddlesEntities()
 
 void PongECSFactory::initializeServiceEntities()
 {
+    serviceComponentsRegistry.push_back(ServiceComponent());
+    leftPlayerService.serviceComponent = &serviceComponentsRegistry.back();
     leftPlayerService.positionComponent.position = {
-        45, 
+        45,
         appliance->screen->height() / 2 - ball.renderComponent.sprite->getHeight() / 2
     };
-    leftPlayerService.serviceComponent.serviceXVelocity = 30;
-    leftPlayerService.serviceComponent.entity = &leftPlayerService;
+    leftPlayerService.serviceComponent->serviceXVelocity = 30;
+    leftPlayerService.serviceComponent->entity = &leftPlayerService;
 
+    serviceComponentsRegistry.push_back(ServiceComponent());
+    rightPlayerService.serviceComponent = &serviceComponentsRegistry.back();
     rightPlayerService.positionComponent.position = {
-        appliance->screen->width() - 45, 
+        appliance->screen->width() - 45,
         appliance->screen->height() / 2 - ball.renderComponent.sprite->getHeight() / 2
     };
-    rightPlayerService.serviceComponent.serviceXVelocity = -30;
-    rightPlayerService.serviceComponent.entity = &rightPlayerService;
+    rightPlayerService.serviceComponent->serviceXVelocity = -30;
+    rightPlayerService.serviceComponent->entity = &rightPlayerService;
 }
 
 void PongECSFactory::initializeGoalEntities()
@@ -181,8 +185,8 @@ void PongECSFactory::populateBouncingBoxComponentsPool()
 
 void PongECSFactory::populateServiceComponentsPool()
 {
-    serviceComponents.push_back(&leftPlayerService.serviceComponent);
-    serviceComponents.push_back(&rightPlayerService.serviceComponent);
+    serviceComponents.push_back(leftPlayerService.serviceComponent);
+    serviceComponents.push_back(rightPlayerService.serviceComponent);
 }
 
 void PongECSFactory::populateGoalComponentsPool()
@@ -206,6 +210,8 @@ void PongECSFactory::initializeComponentPools()
 {
     renderComponents = Vector<RenderComponent*>(renderComponentsStorage);
     bouncingBoxComponents = Vector<BouncingBoxComponent*>(bouncingBoxComponentsStorage);
+
+    serviceComponentsRegistry = Vector<ServiceComponent>(serviceComponentsRegistryStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     
     goalComponentsRegistry = Vector<GoalComponent>(goalComponentsRegistryStorage);

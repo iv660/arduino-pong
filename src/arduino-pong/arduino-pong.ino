@@ -49,7 +49,7 @@ void setup()
     renderSystem.begin();
 
     ecsFactory.getLeftPlayerServiceEntity()
-        ->serviceComponent.isRequested = true;
+        ->serviceComponent->isRequested = true;
 }
 
 void loop() 

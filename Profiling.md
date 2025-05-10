@@ -10,3 +10,6 @@
 
 ### Pointers in `goalComponent`
 - 569 bytes free, fully functional
+
+### Pointers in `serviceComponent`
+- 685 bytes free, fully functional
