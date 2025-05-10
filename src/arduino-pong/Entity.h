@@ -16,7 +16,7 @@ struct Entity {
     MovementComponent movementComponent;
     BouncingBoxComponent bouncingBoxComponent;
     ServiceComponent serviceComponent;
-    GoalComponent goalComponent;
+    GoalComponent* goalComponent;
     PositionControlComponent* positionControlComponent;
     PositionFollowingComponent* positionFollowingComponent = nullptr;
     CounterComponent counterComponent;

@@ -128,16 +128,22 @@ void PongECSFactory::initializeServiceEntities()
 void PongECSFactory::initializeGoalEntities()
 {
     leftPlayerGoal.positionComponent.position = {0, 0};
-    leftPlayerGoal.goalComponent.height = appliance->screen->height();
-    leftPlayerGoal.goalComponent.service = &leftPlayerService;
-    leftPlayerGoal.goalComponent.score = &score;
-    leftPlayerGoal.goalComponent.entity = &leftPlayerGoal;
+
+    goalComponentsRegistry.push_back(GoalComponent());
+    leftPlayerGoal.goalComponent = &goalComponentsRegistry.back();
+    leftPlayerGoal.goalComponent->height = appliance->screen->height();
+    leftPlayerGoal.goalComponent->service = &leftPlayerService;
+    leftPlayerGoal.goalComponent->score = &score;
+    leftPlayerGoal.goalComponent->entity = &leftPlayerGoal;
 
     rightPlayerGoal.positionComponent.position = {appliance->screen->width(), 0};
-    rightPlayerGoal.goalComponent.height = appliance->screen->height();
-    rightPlayerGoal.goalComponent.service = &rightPlayerService;
-    rightPlayerGoal.goalComponent.score = &score;
-    rightPlayerGoal.goalComponent.entity = &rightPlayerGoal;
+
+    goalComponentsRegistry.push_back(GoalComponent());
+    rightPlayerGoal.goalComponent = &goalComponentsRegistry.back();
+    rightPlayerGoal.goalComponent->height = appliance->screen->height();
+    rightPlayerGoal.goalComponent->service = &rightPlayerService;
+    rightPlayerGoal.goalComponent->score = &score;
+    rightPlayerGoal.goalComponent->entity = &rightPlayerGoal;
 }
 
 void PongECSFactory::populateEntitiesPool()
@@ -181,8 +187,8 @@ void PongECSFactory::populateServiceComponentsPool()
 
 void PongECSFactory::populateGoalComponentsPool()
 {
-    goalComponents.push_back(&leftPlayerGoal.goalComponent);
-    goalComponents.push_back(&rightPlayerGoal.goalComponent);
+    goalComponents.push_back(leftPlayerGoal.goalComponent);
+    goalComponents.push_back(rightPlayerGoal.goalComponent);
 }
 
 void PongECSFactory::populatePositionControlComponentsPool()
@@ -201,6 +207,8 @@ void PongECSFactory::initializeComponentPools()
     renderComponents = Vector<RenderComponent*>(renderComponentsStorage);
     bouncingBoxComponents = Vector<BouncingBoxComponent*>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
+    
+    goalComponentsRegistry = Vector<GoalComponent>(goalComponentsRegistryStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
     
     positionControlComponentsRegistry = Vector<PositionControlComponent>(positionControlComponentsRegistryStorage);

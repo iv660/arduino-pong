@@ -42,9 +42,9 @@ bool GoalDetectionSystem::hitsFromRight(Entity *entity1, Entity *entity2) {
 
 bool GoalDetectionSystem::areOnSameHeight(Entity *entity1, Entity *entity2) {
     int entity1Top = entity1->positionComponent.position.y;
-    int entity1Bottom = entity1Top + entity1->goalComponent.height;
+    int entity1Bottom = entity1Top + entity1->goalComponent->height;
     int entity2Top = entity2->positionComponent.position.y;
-    int entity2Bottom = entity2Top + entity2->goalComponent.height;
+    int entity2Bottom = entity2Top + entity2->goalComponent->height;
 
     return (entity2Top <= entity1Top && entity1Top <= entity2Bottom) || 
            (entity1Top <= entity2Top && entity2Top <= entity1Bottom) || 

@@ -40,6 +40,8 @@ class PongECSFactory
         ServiceComponent* serviceComponentsStorage[2];
         Vector<ServiceComponent*> serviceComponents;
 
+        GoalComponent goalComponentsRegistryStorage[2];
+        Vector<GoalComponent> goalComponentsRegistry;
         GoalComponent* goalComponentsStorage[2];
         Vector<GoalComponent*> goalComponents;
 
