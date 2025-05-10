@@ -127,7 +127,7 @@ void CollisionSystem::adjustPositionFollowingSkill(Vector<PositionFollowingCompo
 {
     for (auto positionFollowingComponent: positionFollowingComponents) {
         positionFollowingComponent->hitsCountBeforeFailure = 
-            positionFollowingComponent->entity->bouncingBoxComponent.hitsCount + random(-1, 3);
+            (positionFollowingComponent->hitsCountBeforeFailure + positionFollowingComponent->entity->bouncingBoxComponent.hitsCount) / 2 + random(0,  10);
     }
 }
 
