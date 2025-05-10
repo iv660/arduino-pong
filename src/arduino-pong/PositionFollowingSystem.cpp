@@ -10,12 +10,12 @@ int PositionFollowingSystem::calculatePositionY(Entity *entity)
     int trackedEntityCenterPositionY = trackedEntityPositionY + (trackedEntity->renderComponent.sprite->getHeight() / 2);
     int desiredControlledEntityPositionY  = trackedEntityCenterPositionY - (entity->renderComponent.sprite->getHeight() / 2);
 
-    if (desiredControlledEntityPositionY < entity->positionControlComponent.range.from) {
-        return entity->positionControlComponent.range.from;
+    if (desiredControlledEntityPositionY < entity->positionControlComponent->range.from) {
+        return entity->positionControlComponent->range.from;
     }
 
-    if (desiredControlledEntityPositionY > entity->positionControlComponent.range.to) {
-        return entity->positionControlComponent.range.to;
+    if (desiredControlledEntityPositionY > entity->positionControlComponent->range.to) {
+        return entity->positionControlComponent->range.to;
     }
 
     return desiredControlledEntityPositionY;

@@ -80,11 +80,16 @@ void PongECSFactory::initializePaddlesEntities()
     
     // This code requires the components' sprite to be initialized first
     // Don't move the code above the initialization of paddles components
-    leftPaddle.positionControlComponent.range = {
+    positionControlComponentsRegistry.push_back(PositionControlComponent());
+    leftPaddle.positionControlComponent = &positionControlComponentsRegistry.back();
+    leftPaddle.positionControlComponent->range = {
         topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
         appliance->screen->height() - leftPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
-    rightPaddle.positionControlComponent.range = {
+
+    positionControlComponentsRegistry.push_back(PositionControlComponent());
+    rightPaddle.positionControlComponent = &positionControlComponentsRegistry.back();
+    rightPaddle.positionControlComponent->range = {
         topBorder.positionComponent.position.y + topBorder.renderComponent.sprite->getHeight() + 1,
         appliance->screen->height() - rightPaddle.renderComponent.sprite->getHeight() - (bottomBorder.renderComponent.sprite->getHeight() + 1)
     };
@@ -96,9 +101,9 @@ void PongECSFactory::initializePaddlesEntities()
     leftPaddle.positionFollowingComponent->isFollowing = true;
     
     leftPaddle.bouncingBoxComponent.entity = &leftPaddle;
-    leftPaddle.positionControlComponent.entity = &leftPaddle;
+    leftPaddle.positionControlComponent->entity = &leftPaddle;
     rightPaddle.bouncingBoxComponent.entity = &rightPaddle;
-    rightPaddle.positionControlComponent.entity = &rightPaddle;
+    rightPaddle.positionControlComponent->entity = &rightPaddle;
     rightPaddle.renderComponent.entity = &rightPaddle;
     leftPaddle.renderComponent.entity = &leftPaddle;
 }
@@ -182,8 +187,8 @@ void PongECSFactory::populateGoalComponentsPool()
 
 void PongECSFactory::populatePositionControlComponentsPool()
 {
-    positionControlComponents.push_back(&leftPaddle.positionControlComponent);
-    positionControlComponents.push_back(&rightPaddle.positionControlComponent);
+    positionControlComponents.push_back(leftPaddle.positionControlComponent);
+    positionControlComponents.push_back(rightPaddle.positionControlComponent);
 }
 
 void PongECSFactory::populatePositionFollowingComponentsPool()
@@ -197,7 +202,10 @@ void PongECSFactory::initializeComponentPools()
     bouncingBoxComponents = Vector<BouncingBoxComponent*>(bouncingBoxComponentsStorage);
     serviceComponents = Vector<ServiceComponent*>(serviceComponentsStorage);
     goalComponents = Vector<GoalComponent*>(goalComponentsStorage);
+    
+    positionControlComponentsRegistry = Vector<PositionControlComponent>(positionControlComponentsRegistryStorage);
     positionControlComponents = Vector<PositionControlComponent*>(positionControlComponentsStorage);
+    
     positionFollowingComponentsRegistry = Vector<PositionFollowingComponent>(positionFollowingComponentsRegistryRegistryStorage);
     positionFollowingComponents = Vector<PositionFollowingComponent*>(positionFollowingComponentsStorage);
 }
